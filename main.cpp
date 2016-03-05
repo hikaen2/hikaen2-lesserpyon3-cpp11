@@ -345,7 +345,7 @@ SOCKET s;
 int s;
 #endif
 
-void CsaSend(char *buf)
+void CsaSend(const char *buf)
 {
 	int ret;
 	int n = strlen(buf);
