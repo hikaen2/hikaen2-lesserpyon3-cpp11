@@ -319,7 +319,7 @@ enum Teban {
 	LAN
 };
 
-char *tebanStr[]={
+const char *tebanStr[]={
 	"CPU",
 	"HUMAN",
 	"LAN"
@@ -328,7 +328,7 @@ char *tebanStr[]={
 Teban teban[2];
 
 Te TeHistory[1000];
-char *CSAKomaStr[]={
+const char *CSAKomaStr[]={
 //  空 空 空 空 空 空 空 空 空 空 空 空 空 空 空 空 空
 	"","","","","","","","","","","","","","","","","",
 //   歩   香   桂   銀   金   角   飛   王   と   杏   圭   全  金  馬   龍  空

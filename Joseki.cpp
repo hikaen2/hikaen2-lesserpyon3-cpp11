@@ -3,7 +3,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-Joseki::Joseki(char *filenames)
+Joseki::Joseki(const char *filenames)
 {
 	// filenamesは、,区切りとする。
 	// JosekiDataは１エントリー５１２バイトとする。

@@ -865,7 +865,7 @@ void Kyokumen::FPrint(FILE *fp)
 	}
 }
 
-char *komaStrForDump[]={
+const char *komaStrForDump[]={
 "EMP","   ","   ","   ","   ","   ","   ","   ","   ","   ","   ","   ","   ","   ","   ","   ",
 "   ","SFU","SKY","SKE","SGI","SKI","SKA","SHI","SOU","STO","SNY","SNK","SNG","SKI","SUM","SRY",
 "   ","EFU","EKY","EKE","EGI","EKI","EKA","EHI","EOU","ETO","ENY","ENK","ENG","EKI","EUM","ERY",
