@@ -328,7 +328,7 @@ class TsumeHash {
 	static uint64_t HI_BIT_TBL[3];
 	static TsumeVal *FindFirst(uint64_t KyokumenHashVal);
 	static TsumeVal *FindNext(TsumeVal* Now);
-	static uint64_t TsumeHash::CalcHand(int Motigoma[]);
+	static uint64_t CalcHand(int Motigoma[]);
 public:
 	static void Clear();
 	static void Add(uint64_t KyokumenHashVal,uint64_t HandHashVal,int Motigoma[],int mate,Te te);
