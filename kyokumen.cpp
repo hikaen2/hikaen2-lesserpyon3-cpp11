@@ -823,7 +823,7 @@ void Kyokumen::FPrint(FILE *fp)
 {
 	int x,y;
 	y = 0;
-	fprintf(fp,"Hash:%016I64x Hand:%016I64x Kyokumen:%016I64x\n",HashVal,HandHashVal,KyokumenHashVal);
+	fprintf(fp,"Hash:%016llx Hand:%016llx Kyokumen:%016llx\n",HashVal,HandHashVal,KyokumenHashVal);
 
 	fprintf(fp,"持ち駒：");
 	for (x = EHI; x >=EFU; x--) {
@@ -846,7 +846,7 @@ void Kyokumen::FPrint(FILE *fp)
 	for(y=1;y<=9;y++) {
 		fprintf(fp,"|");
 		for(x=9;x>=1;x--) {
-			fprintf(fp,komaStr[ban[x*16+y]]);
+			fprintf(fp, "%s", komaStr[ban[x*16+y]]);
 		}
 		const char* nums[] = {"", "一", "二", "三", "四", "五", "六", "七", "八", "九"};
 		fprintf(fp, "|%s", nums[y]);
@@ -2471,7 +2471,7 @@ int Kyokumen::Mate(int SorE,int maxDepth,Te &te)
 	}
 	int ret;
 	for(int i=1;i<=maxDepth;i+=2) {
-		if (ret=CheckMate(SorE,0,i,teBuf,te)) {
+		if ((ret=CheckMate(SorE,0,i,teBuf,te))) {
 			break;
 		}
 	}
