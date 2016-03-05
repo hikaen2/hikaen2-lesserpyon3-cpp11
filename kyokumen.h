@@ -85,15 +85,6 @@ extern int HandValue[];
 // ただし、演算の高速性のために、飛び駒の利きは上位１６ビットのうちの８ビットを利用します。
 typedef unsigned int Kiki;
 
-// 5章で追加。６４ビット型の整数型
-#ifdef _GCC_
-typedef long long int64;
-typedef unsigned long long uint64;
-#else
-typedef __int64 int64;
-typedef unsigned __int64 uint64;
-#endif
-
 class Kyokumen;
 
 // 手のクラス
@@ -199,18 +190,18 @@ protected:
 	int Eval(int pos);
 
 	// 5章で追加。ハッシュの種
-	static uint64 HashSeed[ERY+1][0x99+1];
-	static uint64 HandHashSeed[EHI+1][18+1];
+	static uint64_t HashSeed[ERY+1][0x99+1];
+	static uint64_t HandHashSeed[EHI+1][18+1];
  
 public:
 	static void HashInit();
 
-	uint64 KyokumenHashVal;
-	uint64 HandHashVal;
-	uint64 HashVal;
+	uint64_t KyokumenHashVal;
+	uint64_t HandHashVal;
+	uint64_t HashVal;
 
 	// 1000手くらいしか指さないことにして置きましょう。
-	static uint64 HashHistory[1000];
+	static uint64_t HashHistory[1000];
 	static int OuteHistory[1000];
 
 	// １章で追加。posからdir方向にある何か駒（もしくは壁）を探す。
@@ -316,8 +307,8 @@ public:
 #define RETRY_MAX 9
 
 struct TsumeVal {
-	uint64 HashVal;
-	uint64 Motigoma;
+	uint64_t HashVal;
+	uint64_t Motigoma;
 	int NextEntry;
 	int mate;
 	Te te;
@@ -328,22 +319,22 @@ struct TsumeVal {
 
 class TsumeHash {
 	static TsumeVal HashTbl[TSUME_HASH_SIZE];
-	static uint64 FU_BIT_TBL[19];
-	static uint64 KY_BIT_TBL[5];
-	static uint64 KE_BIT_TBL[5];
-	static uint64 GI_BIT_TBL[5];
-	static uint64 KI_BIT_TBL[5];
-	static uint64 KA_BIT_TBL[3];
-	static uint64 HI_BIT_TBL[3];
-	static TsumeVal *FindFirst(uint64 KyokumenHashVal);
+	static uint64_t FU_BIT_TBL[19];
+	static uint64_t KY_BIT_TBL[5];
+	static uint64_t KE_BIT_TBL[5];
+	static uint64_t GI_BIT_TBL[5];
+	static uint64_t KI_BIT_TBL[5];
+	static uint64_t KA_BIT_TBL[3];
+	static uint64_t HI_BIT_TBL[3];
+	static TsumeVal *FindFirst(uint64_t KyokumenHashVal);
 	static TsumeVal *FindNext(TsumeVal* Now);
-	static uint64 TsumeHash::CalcHand(int Motigoma[]);
+	static uint64_t TsumeHash::CalcHand(int Motigoma[]);
 public:
 	static void Clear();
-	static void Add(uint64 KyokumenHashVal,uint64 HandHashVal,int Motigoma[],int mate,Te te);
-	static TsumeVal *Find(uint64 KyokumenHashVal,uint64 HandHashVal,int Motigoma[]);
-	static TsumeVal *DomSearchCheckMate(uint64 KyokumenHashVal,int Motigoma[]);
-	static TsumeVal *DomSearchAntiMate(uint64 KyokumenHashVal,int Motigoma[]);
+	static void Add(uint64_t KyokumenHashVal,uint64_t HandHashVal,int Motigoma[],int mate,Te te);
+	static TsumeVal *Find(uint64_t KyokumenHashVal,uint64_t HandHashVal,int Motigoma[]);
+	static TsumeVal *DomSearchCheckMate(uint64_t KyokumenHashVal,int Motigoma[]);
+	static TsumeVal *DomSearchAntiMate(uint64_t KyokumenHashVal,int Motigoma[]);
 };
 
 template<class T> void swap(T &x,T &y)

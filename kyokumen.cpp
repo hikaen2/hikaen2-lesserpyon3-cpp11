@@ -3,10 +3,10 @@
 #include <memory.h>
 #include <stdlib.h>
 
-uint64 Kyokumen::HashSeed[ERY+1][0x99+1];
-uint64 Kyokumen::HandHashSeed[EHI+1][18+1];
+uint64_t Kyokumen::HashSeed[ERY+1][0x99+1];
+uint64_t Kyokumen::HandHashSeed[EHI+1][18+1];
 
-uint64 Kyokumen::HashHistory[1000];
+uint64_t Kyokumen::HashHistory[1000];
 int Kyokumen::OuteHistory[1000];
 
 void Kyokumen::HashInit()
@@ -14,20 +14,20 @@ void Kyokumen::HashInit()
 	int i;
 	for(i=0;i<=ERY;i++) {
 		for(int pos=0x11;pos<=0x99;pos++) {
-			HashSeed[i][pos]=((uint64)rand())<<49|
-							 ((uint64)rand())<<34|
-							 ((uint64)rand())<<19|
-							 ((uint64)rand())<<4|
+			HashSeed[i][pos]=((uint64_t)rand())<<49|
+							 ((uint64_t)rand())<<34|
+							 ((uint64_t)rand())<<19|
+							 ((uint64_t)rand())<<4|
 							  rand() & 0x07;
 		}
 	}
 	
 	for(i=SFU;i<=EHI;i++) {
 		for(int maisuu=0;maisuu<=18;maisuu++) {
-			HandHashSeed[i][maisuu]=((uint64)rand())<<49|
-								 ((uint64)rand())<<34|
-								 ((uint64)rand())<<19|
-								 ((uint64)rand())<<4|
+			HandHashSeed[i][maisuu]=((uint64_t)rand())<<49|
+								 ((uint64_t)rand())<<34|
+								 ((uint64_t)rand())<<19|
+								 ((uint64_t)rand())<<4|
 								  rand() & 0x07;
 		}
 	}
@@ -2259,7 +2259,7 @@ int Kyokumen::MakeChecks(int SorE,Te *teBuf,int *pin)
 TsumeVal TsumeHash::HashTbl[TSUME_HASH_SIZE];
 
 
-uint64 TsumeHash::FU_BIT_TBL[19]={
+uint64_t TsumeHash::FU_BIT_TBL[19]={
 	0x0000000000000000,
 	0x0000000000000001,
 	0x0000000000000003,
@@ -2281,7 +2281,7 @@ uint64 TsumeHash::FU_BIT_TBL[19]={
 	0x000000000007ffff
 };
 
-uint64 TsumeHash::KY_BIT_TBL[5]={
+uint64_t TsumeHash::KY_BIT_TBL[5]={
 	0x0000000000000000,
 	0x0000000000100000,
 	0x0000000000300000,
@@ -2289,7 +2289,7 @@ uint64 TsumeHash::KY_BIT_TBL[5]={
 	0x0000000000f00000,
 };
 
-uint64 TsumeHash::KE_BIT_TBL[5]={
+uint64_t TsumeHash::KE_BIT_TBL[5]={
 	0x0000000000000000,
 	0x0000000001000000,
 	0x0000000003000000,
@@ -2297,7 +2297,7 @@ uint64 TsumeHash::KE_BIT_TBL[5]={
 	0x000000000f000000,
 };
 
-uint64 TsumeHash::GI_BIT_TBL[5]={
+uint64_t TsumeHash::GI_BIT_TBL[5]={
 	0x0000000000000000,
 	0x0000000010000000,
 	0x0000000030000000,
@@ -2305,7 +2305,7 @@ uint64 TsumeHash::GI_BIT_TBL[5]={
 	0x00000000f0000000,
 };
 
-uint64 TsumeHash::KI_BIT_TBL[5]={
+uint64_t TsumeHash::KI_BIT_TBL[5]={
 	0x0000000000000000,
 	0x0000000100000000,
 	0x0000000300000000,
@@ -2313,19 +2313,19 @@ uint64 TsumeHash::KI_BIT_TBL[5]={
 	0x0000000f00000000,
 };
 
-uint64 TsumeHash::KA_BIT_TBL[3]={
+uint64_t TsumeHash::KA_BIT_TBL[3]={
 	0x0000000000000000,
 	0x0000001000000000,
 	0x0000003000000000,
 };
 
-uint64 TsumeHash::HI_BIT_TBL[3]={
+uint64_t TsumeHash::HI_BIT_TBL[3]={
 	0x0000000000000000,
 	0x0000004000000000,
 	0x000000c000000000,
 };
 
-uint64 TsumeHash::CalcHand(int Motigoma[])
+uint64_t TsumeHash::CalcHand(int Motigoma[])
 {
 	return 
 		FU_BIT_TBL[Motigoma[FU]] |
@@ -2337,10 +2337,10 @@ uint64 TsumeHash::CalcHand(int Motigoma[])
 		HI_BIT_TBL[Motigoma[HI]];
 }
 
-void TsumeHash::Add(uint64 KyokumenHashVal,uint64 HandHashVal,int Motigoma[],int mate,Te te)
+void TsumeHash::Add(uint64_t KyokumenHashVal,uint64_t HandHashVal,int Motigoma[],int mate,Te te)
 {
-	uint64 NowHashVal=KyokumenHashVal;
-	uint64 Hand=CalcHand(Motigoma);
+	uint64_t NowHashVal=KyokumenHashVal;
+	uint64_t Hand=CalcHand(Motigoma);
 	int i;
 	for(i=0;i<RETRY_MAX;i++) {
 		if (HashTbl[NowHashVal&TSUME_HASH_AND].HashVal==0) {
@@ -2401,9 +2401,9 @@ void TsumeHash::Clear()
 	memset(HashTbl,0,sizeof(HashTbl));
 }
 
-TsumeVal* TsumeHash::FindFirst(uint64 KyokumenHashVal)
+TsumeVal* TsumeHash::FindFirst(uint64_t KyokumenHashVal)
 {
-	uint64 NowHashVal=KyokumenHashVal;
+	uint64_t NowHashVal=KyokumenHashVal;
 	for(int i=0;i<RETRY_MAX;i++) {
 		if (HashTbl[NowHashVal&TSUME_HASH_AND].HashVal==KyokumenHashVal) {
 			return HashTbl+(NowHashVal&TSUME_HASH_AND);
@@ -2419,9 +2419,9 @@ TsumeVal* TsumeHash::FindNext(TsumeVal *Now)
 	return HashTbl+Now->NextEntry;
 }
 
-TsumeVal *TsumeHash::Find(uint64 KyokumenHashVal,uint64 HandHashVal,int Motigoma[])
+TsumeVal *TsumeHash::Find(uint64_t KyokumenHashVal,uint64_t HandHashVal,int Motigoma[])
 {
-	uint64 CalcMotigoma=CalcHand(Motigoma);
+	uint64_t CalcMotigoma=CalcHand(Motigoma);
 	TsumeVal *ret=FindFirst(KyokumenHashVal);
 	while(ret!=NULL) {
 		if (ret->Motigoma==CalcMotigoma) return ret;
@@ -2431,9 +2431,9 @@ TsumeVal *TsumeHash::Find(uint64 KyokumenHashVal,uint64 HandHashVal,int Motigoma
 }
 
 // ハッシュに登録された局面で、持ち駒がより少ない局面で詰んでいる局面を探す
-TsumeVal *TsumeHash::DomSearchCheckMate(uint64 KyokumenHashVal,int Motigoma[])
+TsumeVal *TsumeHash::DomSearchCheckMate(uint64_t KyokumenHashVal,int Motigoma[])
 {
-	uint64 CalcMotigoma=CalcHand(Motigoma);
+	uint64_t CalcMotigoma=CalcHand(Motigoma);
 	TsumeVal *ret=FindFirst(KyokumenHashVal);
 	while(ret!=NULL) {
 		if (ret->Motigoma==CalcMotigoma) {

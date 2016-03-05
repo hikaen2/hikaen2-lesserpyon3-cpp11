@@ -18,7 +18,7 @@ enum {
 
 class HashEntry {
 public:
-	uint64 HashVal;		// ハッシュ値
+	uint64_t HashVal;		// ハッシュ値
 	Te Best;			// 前回の反復深化での最善手
 	Te Second;			// 前々回以前の反復深化での最善手
 	int value;			// αβ探索で得た局面の評価値
