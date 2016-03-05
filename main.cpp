@@ -1,5 +1,7 @@
 #include "main.h"
+#include <algorithm>
 #include <stdlib.h>
+#include <string.h>
 #include <time.h>
 
 #ifdef _WINDOWS
@@ -11,6 +13,9 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #endif
+
+using std::max;
+using std::min;
 
 HashEntry Sikou::HashTbl[1024*1024];
 
