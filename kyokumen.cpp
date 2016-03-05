@@ -22,7 +22,7 @@ void Kyokumen::HashInit()
 							 ((uint64_t)rand())<<34|
 							 ((uint64_t)rand())<<19|
 							 ((uint64_t)rand())<<4|
-							  rand() & 0x07;
+							 (rand() & 0x07);
 		}
 	}
 	
@@ -32,7 +32,7 @@ void Kyokumen::HashInit()
 								 ((uint64_t)rand())<<34|
 								 ((uint64_t)rand())<<19|
 								 ((uint64_t)rand())<<4|
-								  rand() & 0x07;
+								 (rand() & 0x07);
 		}
 	}
 }
@@ -1676,13 +1676,13 @@ void KyokumenKomagumi::SenkeiInit()
 			}
 		}
 	}
-	if (Hand[SHI]==1) if (SHI1==0) SHI1=1; else SHI2=1;
+	if (Hand[SHI]==1) { if (SHI1==0) SHI1=1; else SHI2=1; }
 	if (Hand[SHI]==2) SHI1=SHI2=1;
-	if (Hand[EHI]==1) if (EHI1==0) EHI1=1; else EHI2=1;
+	if (Hand[EHI]==1) { if (EHI1==0) EHI1=1; else EHI2=1; }
 	if (Hand[EHI]==2) EHI1=EHI2=1;
-	if (Hand[SKA]==1) if (SKA1==0) SKA1=1; else SKA2=1;
+	if (Hand[SKA]==1) { if (SKA1==0) SKA1=1; else SKA2=1; }
 	if (Hand[SKA]==2) SKA1=SKA2=1;
-	if (Hand[EKA]==1) if (EKA1==0) EKA1=1; else EKA2=1;
+	if (Hand[EKA]==1) { if (EKA1==0) EKA1=1; else EKA2=1; }
 	if (Hand[EKA]==2) EKA1=EKA2=1;
 
 	int Senkei,GyakuSenkei;
