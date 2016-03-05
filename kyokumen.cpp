@@ -829,7 +829,8 @@ void Kyokumen::FPrint(FILE *fp)
 	for (x = EHI; x >=EFU; x--) {
 		if (Hand[x] > 1) {
 			y = 1;
-			fprintf(fp,"%s%2.2s", komaStr2[x], "一二三四五六七八九101112131415161718"+2*Hand[x]-2);
+			const char* nums[] = {"", "一", "二", "三", "四", "五", "六", "七", "八", "九", "10", "11", "12", "13", "14", "15", "16", "17", "18"};
+			fprintf(fp,"%s%s", komaStr2[x], nums[Hand[x]]);
 		} else if (Hand[x] == 1) {
 			y = 1;
 			fprintf(fp,"%s", komaStr2[x]);
@@ -847,7 +848,8 @@ void Kyokumen::FPrint(FILE *fp)
 		for(x=9;x>=1;x--) {
 			fprintf(fp,komaStr[ban[x*16+y]]);
 		}
-		fprintf(fp,"|%2.2s","一二三四五六七八九" + y*2-2);
+		const char* nums[] = {"", "一", "二", "三", "四", "五", "六", "七", "八", "九"};
+		fprintf(fp, "|%s", nums[y]);
 		fprintf(fp,"\n");
 	}
 	fprintf(fp,"+---------------------------+\n");
@@ -856,7 +858,8 @@ void Kyokumen::FPrint(FILE *fp)
 	for (x = SHI; x >= SFU; x--) {
 		if (Hand[x] > 1) {
 			y = 1;
-			fprintf(fp,"%s%2.2s", komaStr2[x], "一二三四五六七八九101112131415161718"+2*Hand[x]-2);
+			const char* nums[] = {"", "一", "二", "三", "四", "五", "六", "七", "八", "九", "10", "11", "12", "13", "14", "15", "16", "17", "18"};
+			fprintf(fp,"%s%s", komaStr2[x], nums[Hand[x]]);
 		} else if (Hand[x] == 1) {
 			y = 1;
 			fprintf(fp,"%s", komaStr2[x]);
