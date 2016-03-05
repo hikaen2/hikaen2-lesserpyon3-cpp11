@@ -5,15 +5,15 @@ void Te::FPrint(FILE *fp)
 	fprintf(fp,"%02x",to);
 	fprintf(fp,"%02s",komaStr2[koma]);
 	if (promote) {
-		fprintf(fp,"ê¨");
+		fprintf(fp,"Êàê");
 	}
 	if (from<OU) {
-		fprintf(fp,"ë≈Å@");
+		fprintf(fp,"Êâì„ÄÄ");
 	} else {
 		fprintf(fp,"(%02x)",from);
 	}
 	if (!promote) {
-		fprintf(fp,"Å@");
+		fprintf(fp,"„ÄÄ");
 	}
 }
 

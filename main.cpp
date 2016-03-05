@@ -21,11 +21,11 @@ int Sikou::MakeMoveFirst(int SorE,int depth,Te teBuf[],KyokumenKomagumi k)
 		return 0;
 	}
 	if (HashTbl[k.HashVal & 0xfffff].Tesu%2!=k.Tesu%2) {
-		// è”Ô‚ªˆá‚¤B
+		// æ‰‹ç•ªãŒé•ã†ã€‚
 		return 0;
 	}
 
-	// ‹Ç–Ê‚ªˆê’v‚µ‚½‚Æv‚í‚ê‚é
+	// å±€é¢ãŒä¸€è‡´ã—ãŸã¨æ€ã‚ã‚Œã‚‹
 	Te te=HashTbl[k.HashVal & 0xfffff].Best;
 	if (!te.IsNull()) {
 		if (k.IsLegalMove(SorE,te)) {
@@ -47,14 +47,14 @@ int Sikou::MakeMoveFirst(int SorE,int depth,Te teBuf[],KyokumenKomagumi k)
 	return teNum;
 }
 
-Te Stack[32];	// 32‚ÆŒ¾‚¤”š‚Í“K“–BÅ‘å[‚³‚ª‚±‚Ì’ö“x‚Ü‚Å‚µ‚©s‚©‚È‚¢‚±‚Æ‚ğŠú‘Ò‚µ‚Ä‚¢‚éB
+Te Stack[32];	// 32ã¨è¨€ã†æ•°å­—ã¯é©å½“ã€‚æœ€å¤§æ·±ã•ãŒã“ã®ç¨‹åº¦ã¾ã§ã—ã‹è¡Œã‹ãªã„ã“ã¨ã‚’æœŸå¾…ã—ã¦ã„ã‚‹ã€‚
 
-// ‘æ‚SÍ‚Å’Ç‰ÁBƒ¿ƒÀ–@‚É‚æ‚é’TõB
-// ¡Œã‚ÍA‚±‚ÌƒAƒ‹ƒSƒŠƒYƒ€‚ğŠî–{‚Éi‚ß‚Ä‚¢‚­B
+// ç¬¬ï¼”ç« ã§è¿½åŠ ã€‚Î±Î²æ³•ã«ã‚ˆã‚‹æ¢ç´¢ã€‚
+// ä»Šå¾Œã¯ã€ã“ã®ã‚¢ãƒ«ã‚´ãƒªã‚ºãƒ ã‚’åŸºæœ¬ã«é€²ã‚ã¦ã„ãã€‚
 int Sikou::NegaAlphaBeta(int SorE,KyokumenKomagumi &k,int alpha,int beta,int depth,int depthMax,bool bITDeep)
 {
 	if (depth==1) {
-		// ç“úèƒ`ƒFƒbƒN
+		// åƒæ—¥æ‰‹ãƒã‚§ãƒƒã‚¯
 		int sennitite=0;
 		for(int i=k.Tesu;i>0;i-=2) {
 			if (k.HashHistory[i]==k.HashVal) {
@@ -62,9 +62,9 @@ int Sikou::NegaAlphaBeta(int SorE,KyokumenKomagumi &k,int alpha,int beta,int dep
 			}
 		}
 		if (sennitite>=4) {
-			// ç“úè
+			// åƒæ—¥æ‰‹
 			sennitite=0;
-			// ˜A‘±‰¤è‚Ìç“úèƒ`ƒFƒbƒN
+			// é€£ç¶šç‹æ‰‹ã®åƒæ—¥æ‰‹ãƒã‚§ãƒƒã‚¯
 			int i;
 			for(i=k.Tesu;sennitite<=3&&i>0;i-=2) {
 				if (!Kyokumen::OuteHistory[i]) {
@@ -75,7 +75,7 @@ int Sikou::NegaAlphaBeta(int SorE,KyokumenKomagumi &k,int alpha,int beta,int dep
 				}
 			}
 			if (sennitite==4) {
-				// ˜A‘±‰¤è‚Ìç“úè‚ğ‚©‚¯‚ç‚ê‚Ä‚¢‚é
+				// é€£ç¶šç‹æ‰‹ã®åƒæ—¥æ‰‹ã‚’ã‹ã‘ã‚‰ã‚Œã¦ã„ã‚‹
 				return VAL_INFINITE;
 			}
 			sennitite=0;
@@ -88,7 +88,7 @@ int Sikou::NegaAlphaBeta(int SorE,KyokumenKomagumi &k,int alpha,int beta,int dep
 				}
 			}
 			if (sennitite==4) {
-				// ˜A‘±‰¤è‚Ìç“úè‚ğ‚©‚¯‚Ä‚¢‚é
+				// é€£ç¶šç‹æ‰‹ã®åƒæ—¥æ‰‹ã‚’ã‹ã‘ã¦ã„ã‚‹
 				return -VAL_INFINITE;
 			}
 			return 0;
@@ -96,7 +96,7 @@ int Sikou::NegaAlphaBeta(int SorE,KyokumenKomagumi &k,int alpha,int beta,int dep
 	}
 	if (depth==depthMax) {
 		int value=k.Evaluate()+k.BestEval(SorE);
-		// ©•ª‚Ìè”Ô‚©‚çŒ©‚½“¾“_‚ğ•Ô‚·
+		// è‡ªåˆ†ã®æ‰‹ç•ªã‹ã‚‰è¦‹ãŸå¾—ç‚¹ã‚’è¿”ã™
 		if (SorE==SELF) {
 			return value;
 		} else {
@@ -112,7 +112,7 @@ int Sikou::NegaAlphaBeta(int SorE,KyokumenKomagumi &k,int alpha,int beta,int dep
 			return e.value;
 		}
 	} else if (depthMax-depth>2 && bITDeep) {
-		// ‰‚ß‚Ä–K‚ê‚½‹Ç–Ê‚ÅA[‚³‚àc‚Á‚Ä‚¢‚é‚Ì‚Å‘½d”½•œ[‰»‚ğs‚¤B
+		// åˆã‚ã¦è¨ªã‚ŒãŸå±€é¢ã§ã€æ·±ã•ã‚‚æ®‹ã£ã¦ã„ã‚‹ã®ã§å¤šé‡åå¾©æ·±åŒ–ã‚’è¡Œã†ã€‚
 		return ITDeep(SorE,k,alpha,beta,depth,depthMax);
 	}
 	Te teBuf[600];
@@ -139,8 +139,8 @@ int Sikou::NegaAlphaBeta(int SorE,KyokumenKomagumi &k,int alpha,int beta,int dep
 		Stack[depth]=teBuf[i];
 		kk.Move(SorE,teBuf[i]);
 		int v=-NegaAlphaBeta(SorE==SELF?ENEMY:SELF,kk,-beta,-max(alpha,retval),depth+1,depthMax);
-		// w‚µè‚Ì•]‰¿‚ªƒ}ƒCƒiƒX‚Ìè‚ª’¼‘O‚Éw‚³‚ê‚Ä‚¢‚ÄA‚»‚ê‚ğæ‚éè‚ªƒ¿’l‚ğXV‚µ‚È‚¢‚æ‚¤‚È‚çA
-		// “Ç‚İ‚ğ[‚­‚µ‚Ä“Ç‚İ’¼‚·
+		// æŒ‡ã—æ‰‹ã®è©•ä¾¡ãŒãƒã‚¤ãƒŠã‚¹ã®æ‰‹ãŒç›´å‰ã«æŒ‡ã•ã‚Œã¦ã„ã¦ã€ãã‚Œã‚’å–ã‚‹æ‰‹ãŒÎ±å€¤ã‚’æ›´æ–°ã—ãªã„ã‚ˆã†ãªã‚‰ã€
+		// èª­ã¿ã‚’æ·±ãã—ã¦èª­ã¿ç›´ã™
 		if (depth>1 && Stack[depth-1].value<0 && Stack[depth-1].to==Stack[depth].to && v<=retval) {
 			v=-NegaAlphaBeta(SorE==SELF?ENEMY:SELF,kk,-beta,-max(alpha,retval),depth+1,depthMax+2);
 		}
@@ -164,7 +164,7 @@ int Sikou::NegaAlphaBeta(int SorE,KyokumenKomagumi &k,int alpha,int beta,int dep
 	}
 	teNum=k.MakeLegalMoves(SorE,teBuf);
 	if (teNum==0) {
-		// •‰‚¯
+		// è² ã‘
 		return -VAL_INFINITE;
 	}
 	k.EvaluateTe(SorE,teNum,teBuf);
@@ -176,8 +176,8 @@ int Sikou::NegaAlphaBeta(int SorE,KyokumenKomagumi &k,int alpha,int beta,int dep
 		Stack[depth]=teBuf[i];
 		kk.Move(SorE,teBuf[i]);
 		int v=-NegaAlphaBeta(SorE==SELF?ENEMY:SELF,kk,-beta,-max(alpha,retval),depth+1,depthMax);
-		// w‚µè‚Ì•]‰¿‚ªƒ}ƒCƒiƒX‚Ìè‚ª’¼‘O‚Éw‚³‚ê‚Ä‚¢‚ÄA‚»‚ê‚ğæ‚éè‚ªƒ¿’l‚ğXV‚µ‚È‚¢‚æ‚¤‚È‚çA
-		// “Ç‚İ‚ğ[‚­‚µ‚Ä“Ç‚İ’¼‚·
+		// æŒ‡ã—æ‰‹ã®è©•ä¾¡ãŒãƒã‚¤ãƒŠã‚¹ã®æ‰‹ãŒç›´å‰ã«æŒ‡ã•ã‚Œã¦ã„ã¦ã€ãã‚Œã‚’å–ã‚‹æ‰‹ãŒÎ±å€¤ã‚’æ›´æ–°ã—ãªã„ã‚ˆã†ãªã‚‰ã€
+		// èª­ã¿ã‚’æ·±ãã—ã¦èª­ã¿ç›´ã™
 		if (depth>1 && Stack[depth-1].value<0 && Stack[depth-1].to==Stack[depth].to && v<=beta) {
 			v=-NegaAlphaBeta(SorE==SELF?ENEMY:SELF,kk,-beta,-max(alpha,retval),depth+1,depthMax+2);
 		}
@@ -206,7 +206,7 @@ HashAdd:
 		e.Second=e.Best;
 	} else {
 		if (e.Tesu-e.depth==k.Tesu-depth && e.remainDepth>depthMax-depth) {
-			// ƒnƒbƒVƒ…‚É‚ ‚éƒf[ƒ^‚Ì•û‚ªd—v‚È‚Ì‚Åã‘‚«‚µ‚È‚¢
+			// ãƒãƒƒã‚·ãƒ¥ã«ã‚ã‚‹ãƒ‡ãƒ¼ã‚¿ã®æ–¹ãŒé‡è¦ãªã®ã§ä¸Šæ›¸ãã—ãªã„
 			if (depth==0) {
 				k.Print();
 				Best[depth][depth].Print();
@@ -251,7 +251,7 @@ Joseki joseki("public.bin");
 Kyokumen *shoki;
 
 
-// –{Ši“I‚Éæ“Ç‚İ‚ğ‚·‚évlƒ‹[ƒ`ƒ“‚É‚È‚è‚Ü‚µ‚½B
+// æœ¬æ ¼çš„ã«å…ˆèª­ã¿ã‚’ã™ã‚‹æ€è€ƒãƒ«ãƒ¼ãƒãƒ³ã«ãªã‚Šã¾ã—ãŸã€‚
 Te Sikou::Think(int SorE,KyokumenKomagumi k)
 {
 	int teNum;
@@ -259,7 +259,7 @@ Te Sikou::Think(int SorE,KyokumenKomagumi k)
 	int hindo[600];
 	int i,j;
 	joseki.fromJoseki(*shoki,SELF,k,k.Tesu,teNum,teBuf,hindo);
-	// ˆê”Ô•p“x‚Ì‚‚¢’èÕ‚ğ‘I‚ÔB
+	// ä¸€ç•ªé »åº¦ã®é«˜ã„å®šè·¡ã‚’é¸ã¶ã€‚
 	if (teNum>0) {
 		int max,maxhindo;
 		max=0;
@@ -274,7 +274,7 @@ Te Sikou::Think(int SorE,KyokumenKomagumi k)
 	}
 	TsumeHash::Clear();
 
-	// depthMax‚Í“K“–‚Éc‚èŠÔ‚É‡‚í‚¹‚Ä’²®‚·‚é‚È‚Ç‚ÌH•v‚ª•K—v‚Å‚·B
+	// depthMaxã¯é©å½“ã«æ®‹ã‚Šæ™‚é–“ã«åˆã‚ã›ã¦èª¿æ•´ã™ã‚‹ãªã©ã®å·¥å¤«ãŒå¿…è¦ã§ã™ã€‚
 	int depthMax=5;
 	for(i=0;i<MAX_DEPTH;i++) {
 		for(j=0;j<MAX_DEPTH;j++) {
@@ -292,17 +292,17 @@ Te Sikou::Think(int SorE,KyokumenKomagumi k)
 	return Best[0][0];
 }
 
-// ”ñ‡–@‚Èè‚©‚Ç‚¤‚©”»’è‚·‚éŠÖ”‚Å‚·B
+// éåˆæ³•ãªæ‰‹ã‹ã©ã†ã‹åˆ¤å®šã™ã‚‹é–¢æ•°ã§ã™ã€‚
 bool IsIllegal(Te te,int teNum,Te *teBuf)
 {
-	// —v‚·‚é‚ÉAè‚Ìˆê——‚Ì’†‚É‚ ‚Á‚½‚çA
+	// è¦ã™ã‚‹ã«ã€æ‰‹ã®ä¸€è¦§ã®ä¸­ã«ã‚ã£ãŸã‚‰ã€
 	for(int i=0;i<teNum;i++) {
 		if (te==teBuf[i]) {
-			// Illegal‚Å‚Í‚È‚¢A‚Æ‚¢‚¤‚±‚Æ‚Åfalse‚ğ•Ô‚µ‚Ü‚·B
+			// Illegalã§ã¯ãªã„ã€ã¨ã„ã†ã“ã¨ã§falseã‚’è¿”ã—ã¾ã™ã€‚
 			return false;
 		}
 	}
-	// è‚Ìˆê——‚Ì’†‚É‚È‚¢è‚ÍAˆá–@‚Èèw‚µ‚Ä‚Í‚¢‚¯‚È‚¢è‚Å‚·B
+	// æ‰‹ã®ä¸€è¦§ã®ä¸­ã«ãªã„æ‰‹ã¯ã€é•æ³•ãªæ‰‹ï¼æŒ‡ã—ã¦ã¯ã„ã‘ãªã„æ‰‹ã§ã™ã€‚
 	return true;
 }
 
@@ -329,11 +329,11 @@ Teban teban[2];
 
 Te TeHistory[1000];
 char *CSAKomaStr[]={
-//  ‹ó ‹ó ‹ó ‹ó ‹ó ‹ó ‹ó ‹ó ‹ó ‹ó ‹ó ‹ó ‹ó ‹ó ‹ó ‹ó ‹ó
+//  ç©º ç©º ç©º ç©º ç©º ç©º ç©º ç©º ç©º ç©º ç©º ç©º ç©º ç©º ç©º ç©º ç©º
 	"","","","","","","","","","","","","","","","","",
-//   •à      Œj   ‹â   ‹à   Šp   ”ò   ‰¤   ‚Æ   ˆÇ   Œ\   ‘S  ‹à  ”n   —´  ‹ó
+//   æ­©   é¦™   æ¡‚   éŠ€   é‡‘   è§’   é£›   ç‹   ã¨   æ   åœ­   å…¨  é‡‘  é¦¬   é¾  ç©º
 	"FU","KY","KE","GI","KI","KA","HI","OU","TO","NY","NK","NG","","UM","RY","",
-//   •à      Œj   ‹â   ‹à   Šp   ”ò   ‰¤   ‚Æ   ˆÇ   Œ\   ‘S  ‹à  ”n   —´
+//   æ­©   é¦™   æ¡‚   éŠ€   é‡‘   è§’   é£›   ç‹   ã¨   æ   åœ­   å…¨  é‡‘  é¦¬   é¾
 	"FU","KY","KE","GI","KI","KA","HI","OU","TO","NY","NK","NG","","UM","RY"
 };
 
@@ -363,7 +363,7 @@ void CsaRecv(char *buf)
 	char c[1];
 
 	for (;;) {
-		// 1byte‚¸‚Â“Ç‚İæ‚éB'\n'‚ª—ˆ‚é‚Ü‚Å
+		// 1byteãšã¤èª­ã¿å–ã‚‹ã€‚'\n'ãŒæ¥ã‚‹ã¾ã§
 		nRecv = recv( s, c, 1, 0);
 		if ( nRecv < 0 ) {
 			fprintf(stderr,"CSARecv:SOCKET ERROR:SOCK NOT OPEN?\n");
@@ -378,7 +378,7 @@ void CsaRecv(char *buf)
 	printf("recv:%s",buf);
 }
 
-// Œ©–{‚ÌƒƒCƒ“‚Å‚·B
+// è¦‹æœ¬ã®ãƒ¡ã‚¤ãƒ³ã§ã™ã€‚
 int main(int argc,char *argv[])
 {
 	long start=clock();
@@ -434,25 +434,25 @@ int main(int argc,char *argv[])
 			usage();
 			exit(1);
 		}
-		// Socket‚ğŠJ‚­
+		// Socketã‚’é–‹ã
 #ifdef _WINDOWS
 		WORD version=0x0101;
 		WSADATA WSAData;
 		WSAStartup(version,&WSAData);
 #endif
-		// ƒ\ƒPƒbƒg\’z
+		// ã‚½ã‚±ãƒƒãƒˆæ§‹ç¯‰
 		s=socket(PF_INET,SOCK_STREAM,0);
 		if (s<0) {
 			fprintf(stderr,"Can't Create Socket.\n");
 			exit(1);
 		}
-		// Ú‘±æƒT[ƒo–¼‰ğŒˆ
+		// æ¥ç¶šå…ˆã‚µãƒ¼ãƒåè§£æ±º
 		struct hostent *host=gethostbyname(Server);
 		if (host==NULL) {
 			fprintf(stderr,"Can't Find Server '%s'.\n",Server);
 			exit(1);
 		}
-		// Ú‘±iconnect)
+		// æ¥ç¶šï¼ˆconnect)
 #ifdef _WINDOWS
 		SOCKADDR_IN Addr;
 #else
@@ -467,19 +467,19 @@ int main(int argc,char *argv[])
 			fprintf(stderr,"Can't Connect to Server '%s' Port %d.\n",Server,Port);
 			exit(1);
 		}
-		// User,Password‚ÅLogin‚·‚é
+		// User,Passwordã§Loginã™ã‚‹
 		char buf[256];
 		sprintf(buf,"LOGIN %s %s\n",User,Password);
 		CsaSend(buf);
 		for(;;) {
-			CsaRecv(buf); // LOGIN OK‚ª‚¢‚Â‚©—ˆ‚é‚Í‚¸B
+			CsaRecv(buf); // LOGIN OKãŒã„ã¤ã‹æ¥ã‚‹ã¯ãšã€‚
 			char tmp[256];
 			sprintf(tmp,"LOGIN:%s OK\n",User);
 			if (strcmp(buf,tmp)==0) {
-				printf("ƒƒOƒCƒ“¬Œ÷");
+				printf("ãƒ­ã‚°ã‚¤ãƒ³æˆåŠŸ");
 				break;
 			} else {
-				printf("ƒƒOƒCƒ“‚É¸”s‚µ‚Ü‚µ‚½B\r\nŒ´ˆö: %s\n", buf);
+				printf("ãƒ­ã‚°ã‚¤ãƒ³ã«å¤±æ•—ã—ã¾ã—ãŸã€‚\r\nåŸå› : %s\n", buf);
 #ifdef _WINDOWS
 				closesocket(s);
 #else
@@ -505,10 +505,10 @@ int main(int argc,char *argv[])
 			}
 		}
 		CsaSend("AGREE\n");
-		CsaRecv(buf);	// START‚ª—ˆ‚é‚Í‚¸B
+		CsaRecv(buf);	// STARTãŒæ¥ã‚‹ã¯ãšã€‚
 	}
 	
-	// •½è‚Ì‰Šú”z’u‚Å‚·BŒ©‚â‚·‚¢‚Å‚µ‚åH•ÏŠ·‚Í‚»‚Ì•ª•¡G‚Å‚·‚¯‚ÇB
+	// å¹³æ‰‹ã®åˆæœŸé…ç½®ã§ã™ã€‚è¦‹ã‚„ã™ã„ã§ã—ã‚‡ï¼Ÿå¤‰æ›ã¯ãã®åˆ†è¤‡é›‘ã§ã™ã‘ã©ã€‚
 	KomaInf HirateBan[9][9]={
 		{EKY,EKE,EGI,EKI,EOU,EKI,EGI,EKE,EKY},
 		{EMP,EHI,EMP,EMP,EMP,EMP,EMP,EKA,EMP},
@@ -520,27 +520,27 @@ int main(int argc,char *argv[])
 		{EMP,SKA,EMP,EMP,EMP,EMP,EMP,SHI,EMP},
 		{SKY,SKE,SGI,SKI,SOU,SKI,SGI,SKE,SKY}
 	};
-	// ‚±‚¿‚ç‚Í–Ê“|‚Å‚àEHI‚Ü‚Å0‚ğ•À‚×‚È‚¢‚Æ‚¢‚¯‚Ü‚¹‚ñB
+	// ã“ã¡ã‚‰ã¯é¢å€’ã§ã‚‚EHIã¾ã§0ã‚’ä¸¦ã¹ãªã„ã¨ã„ã‘ã¾ã›ã‚“ã€‚
 	int HirateMotigoma[EHI+1]={
-	// ‹ó‹ó‹ó‹ó‹ó‹ó‹ó‹ó‹ó‹ó‹ó‹ó‹ó‹ó‹ó‹ó‹ó•àŒj‹â‹àŠp”ò‰¤‚ÆˆÇŒ\‘S‹à”n—´‹ó•àŒj‹â‹àŠp”ò
+	// ç©ºç©ºç©ºç©ºç©ºç©ºç©ºç©ºç©ºç©ºç©ºç©ºç©ºç©ºç©ºç©ºç©ºæ­©é¦™æ¡‚éŠ€é‡‘è§’é£›ç‹ã¨æåœ­å…¨é‡‘é¦¬é¾ç©ºæ­©é¦™æ¡‚éŠ€é‡‘è§’é£›
 		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 	};
 
-	// ‚Oè–Ú‚ÅA•½è‚Ì‹Ç–Ê‚ÅA‚¿‹î‚È‚µ‚©‚çŠJn‚µ‚Ü‚µ‚å‚¤B
+	// ï¼æ‰‹ç›®ã§ã€å¹³æ‰‹ã®å±€é¢ã§ã€æŒã¡é§’ãªã—ã‹ã‚‰é–‹å§‹ã—ã¾ã—ã‚‡ã†ã€‚
 	KyokumenKomagumi Hirate(0,HirateBan,HirateMotigoma);
 	KyokumenKomagumi k(Hirate);
 	KyokumenKomagumi::InitKanagomaValue();
 	shoki=new Kyokumen(0,HirateBan,HirateMotigoma);
 	k.Initialize();
 
-	// ‚±‚ê‚Í‚Ü‚¾ŠÈ’P‚Èvl•”‚È‚Ì‚ÅA‰Šú‰»‚àŠÈ’P‚Å‚·B
+	// ã“ã‚Œã¯ã¾ã ç°¡å˜ãªæ€è€ƒéƒ¨ãªã®ã§ã€åˆæœŸåŒ–ã‚‚ç°¡å˜ã§ã™ã€‚
 	Sikou sikou;
 
-	// «Šû‚Ì‹Ç–Ê‚ÅAÅ‘å‚Ìè”‚Í‚T‚V‚Xè‚¾‚»‚¤‚Å‚·B
+	// å°†æ£‹ã®å±€é¢ã§ã€æœ€å¤§ã®æ‰‹æ•°ã¯ï¼•ï¼—ï¼™æ‰‹ã ãã†ã§ã™ã€‚
 	Te teBuf[600];
 	int teNum;
 
-	// è‘O‚ÌƒvƒŒƒCƒ„[‚©‚çŠJn‚µ‚Ü‚·B
+	// æ‰‹å‰ã®ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‹ã‚‰é–‹å§‹ã—ã¾ã™ã€‚
 	int SorE=SELF;
 
 #ifdef _GCC_
@@ -553,11 +553,11 @@ int main(int argc,char *argv[])
 
 	int bSennitite=false;
 
-	// ‚à‚µ‚à‡–@è‚ª‚È‚­‚È‚Á‚½‚çA‹l‚İ•‰‚¯‚Å‚·B
-	// ‡–@è‚ª‚ ‚éŠÔ‚ÍƒQ[ƒ€‚ğŒp‘±‚µ‚Ü‚·B
-	// «
-	// u“Š—¹v‚É‚æ‚èA‡–@è‚ª‚ ‚éê‡‚Å‚à•‰‚¯‚É‚È‚é‚±‚Æ‚ª‚ ‚è‚Ü‚·B
-	// ‚Ü‚½Au“Š—¹v‚µ‚È‚¢ŒÀ‚èI‚í‚è‚Ü‚¹‚ñ
+	// ã‚‚ã—ã‚‚åˆæ³•æ‰‹ãŒãªããªã£ãŸã‚‰ã€è©°ã¿ï¼è² ã‘ã§ã™ã€‚
+	// åˆæ³•æ‰‹ãŒã‚ã‚‹é–“ã¯ã‚²ãƒ¼ãƒ ã‚’ç¶™ç¶šã—ã¾ã™ã€‚
+	// â†“
+	// ã€ŒæŠ•äº†ã€ã«ã‚ˆã‚Šã€åˆæ³•æ‰‹ãŒã‚ã‚‹å ´åˆã§ã‚‚è² ã‘ã«ãªã‚‹ã“ã¨ãŒã‚ã‚Šã¾ã™ã€‚
+	// ã¾ãŸã€ã€ŒæŠ•äº†ã€ã—ãªã„é™ã‚Šçµ‚ã‚ã‚Šã¾ã›ã‚“
 	Te te;
 	bool bLose=false;
 	for(;;) {
@@ -580,14 +580,14 @@ int main(int argc,char *argv[])
 					te=Te(0);
 				} else do {
 					if (!bFirst) {
-						printf("“ü—Í‚³‚ê‚½è‚ªˆÙí‚Å‚·B\n");
+						printf("å…¥åŠ›ã•ã‚ŒãŸæ‰‹ãŒç•°å¸¸ã§ã™ã€‚\n");
 					}
-					// è‚ğ“ü—Í‚µ‚Ü‚·B
+					// æ‰‹ã‚’å…¥åŠ›ã—ã¾ã™ã€‚
 					char buf[80];
 					gets(buf);
-					// “ü—Í‚Ì•û–@:from,to,promote
-					// ‚½‚¾‚µA•à‚ğ‘Å‚Â‚Æ‚«‚Ífrom‚ğ01A‚ğ‘Å‚Â‚Æ‚«‚Ífrom‚ğ02c‚Æ‚·‚éB
-					// promote‚ÍA¬‚é‚Æ‚«‚É*‚ğ•t‚¯‚éB
+					// å…¥åŠ›ã®æ–¹æ³•:from,to,promote
+					// ãŸã ã—ã€æ­©ã‚’æ‰“ã¤ã¨ãã¯fromã‚’01ã€é¦™ã‚’æ‰“ã¤ã¨ãã¯fromã‚’02â€¦ã¨ã™ã‚‹ã€‚
+					// promoteã¯ã€æˆã‚‹ã¨ãã«*ã‚’ä»˜ã‘ã‚‹ã€‚
 					int from,to;
 					int koma,capture;
 					char promote[2];
@@ -621,7 +621,7 @@ int main(int argc,char *argv[])
 					char buf[256];
 					char komaStr[3];
 					char c;
-					CsaRecv(buf);	// ‘Šè‚Ìw‚µè‚ª‹A‚Á‚Ä‚­‚éBi³‚µ‚¢w‚µè‚Å‚ ‚é‚±‚Æ‚ÍƒT[ƒo‚Åƒ`ƒFƒbƒNÏ‚İj
+					CsaRecv(buf);	// ç›¸æ‰‹ã®æŒ‡ã—æ‰‹ãŒå¸°ã£ã¦ãã‚‹ã€‚ï¼ˆæ­£ã—ã„æŒ‡ã—æ‰‹ã§ã‚ã‚‹ã“ã¨ã¯ã‚µãƒ¼ãƒã§ãƒã‚§ãƒƒã‚¯æ¸ˆã¿ï¼‰
 					if (strcmp(buf,"%TORYO\n")==0) {
 						te=Te(0);
 					} else if (strcmp(buf,"#WIN\n")==0) {
@@ -629,7 +629,7 @@ int main(int argc,char *argv[])
 					} else if (strcmp(buf,"#TIME_UP\n")==0) {
 						te=Te(0);
 					} else if (strcmp(buf,"#LOSE\n")==0) {
-						// «ŠûéŒ¾•‰‚¯B
+						// æŒå°†æ£‹å®£è¨€è² ã‘ã€‚
 						bLose=true;
 						break;
 					} else {
@@ -653,7 +653,7 @@ int main(int argc,char *argv[])
 				break;
 		}
 		if (NextTeban==LAN) {
-			// ¡‚Ìè‚ğ‘—‚é
+			// ä»Šã®æ‰‹ã‚’é€ã‚‹
 			if (te.IsNull()) {
 				CsaSend("%TORYO\n");
 				char buf[256];
@@ -667,13 +667,13 @@ int main(int argc,char *argv[])
 				sprintf(buf,"%c%02x%02x%s\n",SorE==SELF?'+':'-',te.from,te.to,CSAKomaStr[te.koma|(te.promote?PROMOTED:0)]);
 
 				CsaSend(buf);
-				CsaRecv(buf);	// w‚µè‚ª‹A‚Á‚Ä‚­‚éB
+				CsaRecv(buf);	// æŒ‡ã—æ‰‹ãŒå¸°ã£ã¦ãã‚‹ã€‚
 				if (strcmp(buf,"#TIME_UP\n")==0) {
-					// ŠÔØ‚ê
+					// æ™‚é–“åˆ‡ã‚Œ
 					CsaRecv(buf);
 				}
 				if (strcmp(buf,"#LOSE\n")==0) {
-					// ŠÔØ‚ê•‰‚¯B
+					// æ™‚é–“åˆ‡ã‚Œè² ã‘ã€‚
 					bLose=true;
 					break;
 				}
@@ -682,10 +682,10 @@ int main(int argc,char *argv[])
 		}
 		TeHistory[k.Tesu]=te;
 		if (teban[0]!=LAN && teban[1]!=LAN) {
-			// ©‘O‚ÅŒv‘ª‚·‚éB
+			// è‡ªå‰ã§è¨ˆæ¸¬ã™ã‚‹ã€‚
 			ByouHistory[k.Tesu]=(clock()-byouStart)/CLOCKS_PER_SEC;
 			if (ByouHistory[k.Tesu]==0) {
-				// Å’á‚P•b‚Í•K‚¸ƒJƒEƒ“ƒg‚·‚é
+				// æœ€ä½ï¼‘ç§’ã¯å¿…ãšã‚«ã‚¦ãƒ³ãƒˆã™ã‚‹
 				ByouHistory[k.Tesu]=1;
 			}
 		}
@@ -709,7 +709,7 @@ int main(int argc,char *argv[])
 			SikouJikanTotal[1]+=ByouHistory[k.Tesu-1];
 			SorE=SELF;
 		}
-		printf("\n‘vlŠÔ:æè %2d:%02d Œãè%2d:%02d\n",
+		printf("\nç·æ€è€ƒæ™‚é–“:å…ˆæ‰‹ %2d:%02d å¾Œæ‰‹%2d:%02d\n",
 			SikouJikanTotal[0]/60,SikouJikanTotal[0]%60,
 			SikouJikanTotal[1]/60,SikouJikanTotal[1]%60
 		);
@@ -719,17 +719,17 @@ int main(int argc,char *argv[])
 	}
 	k.Print();
 	if (SorE==SELF && te.IsNull()) {
-		printf("æè‚ÌŸ‚¿B\n");
+		printf("å…ˆæ‰‹ã®å‹ã¡ã€‚\n");
 	} else if (SorE==ENEMY && te.IsNull()) {
-		printf("Œãè‚ÌŸ‚¿B\n");
+		printf("å¾Œæ‰‹ã®å‹ã¡ã€‚\n");
 	} else if (SorE==SELF && (teNum==0 || bLose)) {
-		printf("Œãè‚ÌŸ‚¿B\n");
+		printf("å¾Œæ‰‹ã®å‹ã¡ã€‚\n");
 	} else if (SorE==ENEMY && (teNum==0 || bLose)) {
-		printf("æè‚ÌŸ‚¿B\n");
+		printf("å…ˆæ‰‹ã®å‹ã¡ã€‚\n");
 	} else if (bSennitite) {
-		// ç“úè‚É‚æ‚éI‹Ç
-		// ‰¤è‚Ìç“úè‚Ì”»’è
-		printf("ç“úè‚Å‚·B\n");
+		// åƒæ—¥æ‰‹ã«ã‚ˆã‚‹çµ‚å±€
+		// ç‹æ‰‹ã®åƒæ—¥æ‰‹ã®åˆ¤å®š
+		printf("åƒæ—¥æ‰‹ã§ã™ã€‚\n");
 		int sennitite=0;
 		if (Kyokumen::OuteHistory[k.Tesu]) {
 			for(int i=k.Tesu;sennitite<=3&&i>0;i-=2) {
@@ -741,16 +741,16 @@ int main(int argc,char *argv[])
 				}
 			}
 			if (sennitite==4) {
-				// ˜A‘±‰¤è‚Ìç“úè
-				printf("˜A‘±‰¤è‚Ìç“úè‚Å‚·B\n");
+				// é€£ç¶šç‹æ‰‹ã®åƒæ—¥æ‰‹
+				printf("é€£ç¶šç‹æ‰‹ã®åƒæ—¥æ‰‹ã§ã™ã€‚\n");
 				if (SorE==SELF) { 
-					printf("Œãè‚ÌŸ‚¿B\n");
+					printf("å¾Œæ‰‹ã®å‹ã¡ã€‚\n");
 				} else {
-					printf("æè‚ÌŸ‚¿B\n");
+					printf("å…ˆæ‰‹ã®å‹ã¡ã€‚\n");
 				}
 			}
 		} else if (Kyokumen::OuteHistory[k.Tesu-1]) {
-			// ‚±‚¿‚ç‚Í–¢ŒŸØ
+			// ã“ã¡ã‚‰ã¯æœªæ¤œè¨¼
 			for(int i=k.Tesu;sennitite<=3&&i>0;i-=2) {
 				if (!Kyokumen::OuteHistory[i-1]) {
 					break;
@@ -760,19 +760,19 @@ int main(int argc,char *argv[])
 				}
 			}
 			if (sennitite==4) {
-				// ˜A‘±‰¤è‚Ìç“úè
-				printf("˜A‘±‰¤è‚Ìç“úè‚Å‚·B\n");
+				// é€£ç¶šç‹æ‰‹ã®åƒæ—¥æ‰‹
+				printf("é€£ç¶šç‹æ‰‹ã®åƒæ—¥æ‰‹ã§ã™ã€‚\n");
 				if (SorE==SELF) {
-					printf("æè‚ÌŸ‚¿B\n");
+					printf("å…ˆæ‰‹ã®å‹ã¡ã€‚\n");
 				} else {
-					printf("Œãè‚ÌŸ‚¿B\n");
+					printf("å¾Œæ‰‹ã®å‹ã¡ã€‚\n");
 				}
 			}
 		}
 	}
 	FILE *fp=fopen("log.csa","w");
 	if (fp==NULL) {
-		fprintf(stderr,"log.csa‚É‘‚«‚İ‚Å‚«‚Ü‚¹‚ñB");
+		fprintf(stderr,"log.csaã«æ›¸ãè¾¼ã¿ã§ãã¾ã›ã‚“ã€‚");
 	} else {
 		fprintf(fp,"N+\n");
 		fprintf(fp,"N-\n");

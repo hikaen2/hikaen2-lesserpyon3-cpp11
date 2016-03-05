@@ -35,13 +35,13 @@ void Kyokumen::HashInit()
 
 
 
-// ‹Ç–Ê‚ÌƒRƒ“ƒXƒgƒ‰ƒNƒ^F”Õ–Ê‚Ìó‘Ô‚Æè”A‚¿‹î‚©‚ç¶¬
+// å±€é¢ã®ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ï¼šç›¤é¢ã®çŠ¶æ…‹ã¨æ‰‹æ•°ã€æŒã¡é§’ã‹ã‚‰ç”Ÿæˆ
 Kyokumen::Kyokumen(int tesu,KomaInf board[9][9],int Motigoma[])
 {
-	// ”Õ–Ê‚ğWALLi•Çj‚Å–„‚ß‚Ä‚¨‚«‚Ü‚·B
+	// ç›¤é¢ã‚’WALLï¼ˆå£ï¼‰ã§åŸ‹ã‚ã¦ãŠãã¾ã™ã€‚
 	memset(banpadding,WALL,sizeof(banpadding));
 	memset(ban,WALL,sizeof(ban));
-	// ‰Šú‰»
+	// åˆæœŸåŒ–
 	value=0;
 	printf("value:%d\n");
 	kingS=0;
@@ -51,10 +51,10 @@ Kyokumen::Kyokumen(int tesu,KomaInf board[9][9],int Motigoma[])
 	HashVal=0;
 	HandHashVal=0;
 	KyokumenHashVal=0;
-	// board‚Å—^‚¦‚ç‚ê‚½‹Ç–Ê‚ğİ’è‚µ‚Ü‚·B
+	// boardã§ä¸ãˆã‚‰ã‚ŒãŸå±€é¢ã‚’è¨­å®šã—ã¾ã™ã€‚
 	for(int dan=1;dan<=9;dan++) {
 		for(int suji=0x10;suji<=0x90;suji+=0x10) {
-			// «Šû‚Ì‹Ø‚Í¶‚©‚ç‰E‚È‚Ì‚ÅA”z—ñ‚ÌéŒ¾‚Æ‹t‚É‚È‚é‚½‚ßA‹Ø‚Í‚Ğ‚Á‚­‚è•Ô‚³‚È‚¢‚Æ‚È‚è‚Ü‚¹‚ñB
+			// å°†æ£‹ã®ç­‹ã¯å·¦ã‹ã‚‰å³ãªã®ã§ã€é…åˆ—ã®å®£è¨€ã¨é€†ã«ãªã‚‹ãŸã‚ã€ç­‹ã¯ã²ã£ãã‚Šè¿”ã•ãªã„ã¨ãªã‚Šã¾ã›ã‚“ã€‚
 			ban[suji+dan]=board[dan-1][9-suji/0x10];
 			KyokumenHashVal^=HashSeed[ban[suji+dan]][suji+dan];
 			if (ban[suji+dan]==SOU) {
@@ -66,7 +66,7 @@ Kyokumen::Kyokumen(int tesu,KomaInf board[9][9],int Motigoma[])
 			value+=KomaValue[ban[suji+dan]];
 		}
 	}
-	// ‚¿‹î‚Í‚»‚Ì‚Ü‚Ü—˜—p‚µ‚Ü‚·B
+	// æŒã¡é§’ã¯ãã®ã¾ã¾åˆ©ç”¨ã—ã¾ã™ã€‚
 	int i;
 	for(i=0;i<=EHI;i++) {
 		Hand[i]=Motigoma[i];
@@ -82,11 +82,11 @@ Kyokumen::Kyokumen(int tesu,KomaInf board[9][9],int Motigoma[])
 	}
 	HashHistory[Tesu]=HashVal;
 	OuteHistory[Tesu]=((Tesu%2)==0)?controlS[kingE]:controlE[kingS];
-	// controlS/controlE‚ğ‰Šú‰»‚µ‚Ü‚·B
+	// controlS/controlEã‚’åˆæœŸåŒ–ã—ã¾ã™ã€‚
 	InitControl();
 }
 
-// controlS,controlE‚Ì‰Šú‰»
+// controlS,controlEã®åˆæœŸåŒ–
 void Kyokumen::InitControl()
 {
 	int dan, suji;
@@ -97,8 +97,8 @@ void Kyokumen::InitControl()
 
 	for (suji = 0x10; suji <= 0x90; suji += 0x10) {
 		for (dan = 1 ; dan <= 9 ; dan++) {
-			if (ban[suji + dan] & ENEMY) { //“G‚Ì‹î
-				//‹î‚ÌŒø‚«‚ğ’Ç‰Á‚·‚é
+			if (ban[suji + dan] & ENEMY) { //æ•µã®é§’
+				//é§’ã®åŠ¹ãã‚’è¿½åŠ ã™ã‚‹
 				for (i = 0, b = 1, bj = (1<<16); i < 12; i++, b<<=1, bj<<=1) {
 					if (CanJump[i][ban[dan + suji]]) {
 						j = dan + suji;
@@ -110,8 +110,8 @@ void Kyokumen::InitControl()
 						controlE[dan + suji + Direct[i]] |= b;
 					}
 				}
-			} else if (ban[suji + dan] & SELF) { //–¡•û‚Ì‹î‚ª—L‚é
-				//‹î‚ÌŒø‚«‚ğ’Ç‰Á‚·‚é
+			} else if (ban[suji + dan] & SELF) { //å‘³æ–¹ã®é§’ãŒæœ‰ã‚‹
+				//é§’ã®åŠ¹ãã‚’è¿½åŠ ã™ã‚‹
 				for (i = 0, b = 1, bj = (1<<16); i < 12; i++, b<<=1, bj<<=1) {
 					if (CanJump[i][ban[dan + suji]]) {
 						j = dan + suji;
@@ -128,12 +128,12 @@ void Kyokumen::InitControl()
 	}
 }
 
-// è‚Å‹Ç–Ê‚ği‚ß‚é
+// æ‰‹ã§å±€é¢ã‚’é€²ã‚ã‚‹
 void Kyokumen::Move(int SorE,const Te &te)
 {
 	int i,j,b,bj;
 	if (te.from>0x10) {
-		// Œ³‚¢‚½‹î‚ÌƒRƒ“ƒgƒ[ƒ‹‚ğÁ‚·
+		// å…ƒã„ãŸé§’ã®ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ã‚’æ¶ˆã™
 		int dir;
 		for(dir=0,b=1,bj=1<<16;dir<12;dir++,b<<=1,bj<<=1) {
 			if (SorE==SELF) {
@@ -153,12 +153,12 @@ void Kyokumen::Move(int SorE,const Te &te)
 				} while (ban[j] == EMPTY);
 			}
 		}
-		// Œ³‚¢‚½ˆÊ’u‚Í‹ó”’‚É‚È‚é
+		// å…ƒã„ãŸä½ç½®ã¯ç©ºç™½ã«ãªã‚‹
 		ban[te.from]=EMPTY;
-		// ‹ó”’‚É‚È‚Á‚½‚±‚Æ‚Å•Ï‚í‚éƒnƒbƒVƒ…’l
+		// ç©ºç™½ã«ãªã£ãŸã“ã¨ã§å¤‰ã‚ã‚‹ãƒãƒƒã‚·ãƒ¥å€¤
 		KyokumenHashVal^=HashSeed[te.koma][te.from];
 		KyokumenHashVal^=HashSeed[EMPTY][te.from];
-		// ”ò‚Ñ—˜‚«‚ğL‚Î‚·
+		// é£›ã³åˆ©ãã‚’ä¼¸ã°ã™
 		for (i = 0, bj = (1<<16); i < 8; i++, bj<<=1) {
 			int Dir=Direct[i];
 			if (controlS[te.from] & bj) {
@@ -177,22 +177,22 @@ void Kyokumen::Move(int SorE,const Te &te)
 			}
 		}
 	} else {
-		// ‚¿‹î‚©‚çˆê–‡Œ¸‚ç‚·
+		// æŒã¡é§’ã‹ã‚‰ä¸€æšæ¸›ã‚‰ã™
 		HandHashVal^=HandHashSeed[te.koma][Hand[te.koma]];
 		Hand[te.koma]--;
 		value-=HandValue[te.koma];
 		value+=KomaValue[te.koma];
 	}
 	if (ban[te.to]!=EMPTY) {
-		// ‘Šè‚Ì‹î‚ğ‚¿‹î‚É‚·‚éB
-		// ‚¿‹î‚É‚·‚é‚ÍA¬‚Á‚Ä‚¢‚é‹î‚à•s¬‚è‚É–ß‚·Bi&~PROMOTEDj
+		// ç›¸æ‰‹ã®é§’ã‚’æŒã¡é§’ã«ã™ã‚‹ã€‚
+		// æŒã¡é§’ã«ã™ã‚‹æ™‚ã¯ã€æˆã£ã¦ã„ã‚‹é§’ã‚‚ä¸æˆã‚Šã«æˆ»ã™ã€‚ï¼ˆ&~PROMOTEDï¼‰
 		value-=KomaValue[ban[te.to]];
 		value+=HandValue[SorE|(ban[te.to]&~PROMOTED&~SELF&~ENEMY)];
 		int koma=SorE|(ban[te.to]&~PROMOTED&~SELF&~ENEMY);
 		Hand[koma]++;
-		// ƒnƒbƒVƒ…‚Éæ‚Á‚½‹î‚ğ‰Á‚¦‚é
+		// ãƒãƒƒã‚·ãƒ¥ã«å–ã£ãŸé§’ã‚’åŠ ãˆã‚‹
 		HandHashVal^=HandHashSeed[koma][Hand[koma]];
-		//æ‚Á‚½‹î‚ÌŒø‚«‚ğÁ‚·
+		//å–ã£ãŸé§’ã®åŠ¹ãã‚’æ¶ˆã™
 		for (i = 0, b = 1, bj = (1<<16); i < 12; i++, b<<=1, bj<<=1) {
 			int Dir=Direct[i];
 			if (CanJump[i][ban[te.to]]) {
@@ -215,7 +215,7 @@ void Kyokumen::Move(int SorE,const Te &te)
 			}
 		}
 	} else {
-		// ˆÚ“®æ‚ÅÕ‚Á‚½”ò‚Ñ—˜‚«‚ğÁ‚·
+		// ç§»å‹•å…ˆã§é®ã£ãŸé£›ã³åˆ©ãã‚’æ¶ˆã™
 		for (i = 0, bj = (1<<16); i < 8; i++, bj<<=1) {
 			int Dir=Direct[i];
 			if (controlS[te.to] & bj) {
@@ -234,7 +234,7 @@ void Kyokumen::Move(int SorE,const Te &te)
 			}
 		}
 	}
-	// ban[te.to]‚É‚ ‚Á‚½‚à‚Ì‚ğ‚g‚‚“‚ˆ‚©‚çÁ‚·
+	// ban[te.to]ã«ã‚ã£ãŸã‚‚ã®ã‚’ï¼¨ï½ï½“ï½ˆã‹ã‚‰æ¶ˆã™
 	KyokumenHashVal^=HashSeed[ban[te.to]][te.to];
 	if (te.promote) {
 		value-=KomaValue[te.koma];
@@ -243,9 +243,9 @@ void Kyokumen::Move(int SorE,const Te &te)
 	} else {
 		ban[te.to]=te.koma;
 	}
-	// V‚µ‚¢‹î‚ğ‚g‚‚“‚ˆ‚É‰Á‚¦‚é
+	// æ–°ã—ã„é§’ã‚’ï¼¨ï½ï½“ï½ˆã«åŠ ãˆã‚‹
 	KyokumenHashVal^=HashSeed[ban[te.to]][te.to];
-	// ˆÚ“®æ‚Ì—˜‚«‚ğ‚Â‚¯‚é
+	// ç§»å‹•å…ˆã®åˆ©ãã‚’ã¤ã‘ã‚‹
 	for (i = 0, b = 1, bj = (1<<16); i < 12; i++, b<<=1, bj<<=1) {
 		if (CanJump[i][ban[te.to]]) {
 			j = te.to;
@@ -265,7 +265,7 @@ void Kyokumen::Move(int SorE,const Te &te)
 			}
 		}
 	}
-	// ‰¤—l‚ÌˆÊ’u‚ÍŠo‚¦‚Ä‚¨‚­B
+	// ç‹æ§˜ã®ä½ç½®ã¯è¦šãˆã¦ãŠãã€‚
 	if (te.koma==SOU) {
 		kingS=te.to;
 	}
@@ -279,31 +279,31 @@ void Kyokumen::Move(int SorE,const Te &te)
 	OuteHistory[Tesu]=(SorE==SELF)?controlS[kingE]:controlE[kingS];
 }
 
-// ƒsƒ“i“®‚©‚·‚Æ‰¤‚ğæ‚ç‚ê‚Ä‚µ‚Ü‚¤‚Ì‚Å“®‚«‚ª§ŒÀ‚³‚ê‚é‹îj‚Ìó‘Ô‚ğİ’è‚·‚é
+// ãƒ”ãƒ³ï¼ˆå‹•ã‹ã™ã¨ç‹ã‚’å–ã‚‰ã‚Œã¦ã—ã¾ã†ã®ã§å‹•ããŒåˆ¶é™ã•ã‚Œã‚‹é§’ï¼‰ã®çŠ¶æ…‹ã‚’è¨­å®šã™ã‚‹
 void Kyokumen::MakePinInf(int *pin) const
 {
 	int i;
-	// ƒsƒ“î•ñ‚ğİ’è‚·‚é
+	// ãƒ”ãƒ³æƒ…å ±ã‚’è¨­å®šã™ã‚‹
 	for (i = 0x11; i <= 0x99; i++) {
-		// 0‚Íƒsƒ“‚³‚ê‚Ä‚¢‚È‚¢A‚Æ‚¢‚¤ˆÓ–¡
+		// 0ã¯ãƒ”ãƒ³ã•ã‚Œã¦ã„ãªã„ã€ã¨ã„ã†æ„å‘³
 		pin[i] = 0;
 	}
-	if (kingS) {	//©‹Ê‚ª”Õ–Ê‚É‚ ‚é‚Ì‚İ—LŒø
+	if (kingS) {	//è‡ªç‰ãŒç›¤é¢ã«ã‚ã‚‹æ™‚ã®ã¿æœ‰åŠ¹
 		for (i = 0; i < 8; i++) {
 			int p;
 			p = search(kingS, -Direct[i]); 
-			if ((ban[p] != WALL) && !(ban[p] & ENEMY)) { //–¡•û‚Ì‹î‚ª—L‚é
+			if ((ban[p] != WALL) && !(ban[p] & ENEMY)) { //å‘³æ–¹ã®é§’ãŒæœ‰ã‚‹
 				if (controlE[p]&(1<<(16+i))) {
 					pin[p]=Direct[i];
 				}
 			}
 		}
 	}
-	if (kingE) {	//“G‹Ê‚ª”Õ–Ê‚É‚ ‚é‚Ì‚İ—LŒø
+	if (kingE) {	//æ•µç‰ãŒç›¤é¢ã«ã‚ã‚‹æ™‚ã®ã¿æœ‰åŠ¹
 		for (i = 0; i < 8; i++) {
 			int p;
 			p = search(kingE, -Direct[i]);
-			if ((ban[p] != WALL) && (ban[p] & ENEMY)) { //“G‚Ì‹î‚ª—L‚é
+			if ((ban[p] != WALL) && (ban[p] & ENEMY)) { //æ•µã®é§’ãŒæœ‰ã‚‹
 				if (controlS[p]&(1<<(16+i))) {
 					pin[p]=Direct[i];
 				}
@@ -312,7 +312,7 @@ void Kyokumen::MakePinInf(int *pin) const
 	}
 }
 
-// ‹î‚Ì“®‚«‚Æ‚µ‚Ä³‚µ‚¢“®‚«‚ğ‘S‚Ä¶¬‚·‚éB
+// é§’ã®å‹•ãã¨ã—ã¦æ­£ã—ã„å‹•ãã‚’å…¨ã¦ç”Ÿæˆã™ã‚‹ã€‚
 int Kyokumen::MakeLegalMoves(int SorE,Te *teBuf,int *pin)
 {
 	int pbuf[16*11];
@@ -330,7 +330,7 @@ int Kyokumen::MakeLegalMoves(int SorE,Te *teBuf,int *pin)
 
 	int suji,dan;
 	int StartDan,EndDan;
-	// ”Õã‚Ì‹î‚ğ“®‚©‚·
+	// ç›¤ä¸Šã®é§’ã‚’å‹•ã‹ã™
 	for(suji=0x10;suji<=0x90;suji+=0x10) {
 		for(dan=1;dan<=9;dan++) {
 			if (ban[suji+dan]&SorE) {
@@ -338,10 +338,10 @@ int Kyokumen::MakeLegalMoves(int SorE,Te *teBuf,int *pin)
 			}
 		}
 	}
-	// •à‚ğ‘Å‚Â
+	// æ­©ã‚’æ‰“ã¤
 	if (Hand[SorE|FU]>0) {
 		for(suji=0x10;suji<=0x90;suji+=0x10) {
-			// “ñ•àƒ`ƒFƒbƒN
+			// äºŒæ­©ãƒã‚§ãƒƒã‚¯
 			int nifu=0;
 			for(dan=1;dan<=9;dan++) {
 				if (ban[suji+dan]==(SorE|FU)) {
@@ -350,7 +350,7 @@ int Kyokumen::MakeLegalMoves(int SorE,Te *teBuf,int *pin)
 				}
 			}
 			if (nifu) continue;
-			//(æè‚È‚ç‚Q’i–Ú‚æ‚è‰º‚ÉAŒãè‚È‚ç‚W’i–Ú‚æ‚èã‚É‘Å‚Âj
+			//(å…ˆæ‰‹ãªã‚‰ï¼’æ®µç›®ã‚ˆã‚Šä¸‹ã«ã€å¾Œæ‰‹ãªã‚‰ï¼˜æ®µç›®ã‚ˆã‚Šä¸Šã«æ‰“ã¤ï¼‰
 			if (SorE==SELF) {
 				StartDan=2;
 				EndDan=9;
@@ -359,17 +359,17 @@ int Kyokumen::MakeLegalMoves(int SorE,Te *teBuf,int *pin)
 				EndDan=8;
 			}
 			for(dan=StartDan;dan<=EndDan;dan++) {
-				// ‘Å‚¿•à‹l‚ß‚àƒ`ƒFƒbƒN
+				// æ‰“ã¡æ­©è©°ã‚ã‚‚ãƒã‚§ãƒƒã‚¯
 				if (ban[dan+suji]==EMPTY && !Utifudume(SorE,dan+suji,pin)) {
 					teBuf[teNum++]=Te(0,suji+dan,SorE|FU,EMPTY);
 				}
 			}
 		}
 	}
-	// ‚ğ‘Å‚Â
+	// é¦™ã‚’æ‰“ã¤
 	if (Hand[SorE|KY]>0) {
 		for(suji=0x10;suji<=0x90;suji+=0x10) {
-			//(æè‚È‚ç‚Q’i–Ú‚æ‚è‰º‚ÉAŒãè‚È‚ç‚W’i–Ú‚æ‚èã‚É‘Å‚Âj
+			//(å…ˆæ‰‹ãªã‚‰ï¼’æ®µç›®ã‚ˆã‚Šä¸‹ã«ã€å¾Œæ‰‹ãªã‚‰ï¼˜æ®µç›®ã‚ˆã‚Šä¸Šã«æ‰“ã¤ï¼‰
 			if (SorE==SELF) {
 				StartDan=2;
 				EndDan=9;
@@ -384,9 +384,9 @@ int Kyokumen::MakeLegalMoves(int SorE,Te *teBuf,int *pin)
 			}
 		}
 	}
-	//Œj‚ğ‘Å‚Â
+	//æ¡‚ã‚’æ‰“ã¤
 	if (Hand[SorE|KE]>0) {
-		//(æè‚È‚ç‚R’i–Ú‚æ‚è‰º‚ÉAŒãè‚È‚ç‚V’i–Ú‚æ‚èã‚É‘Å‚Âj
+		//(å…ˆæ‰‹ãªã‚‰ï¼“æ®µç›®ã‚ˆã‚Šä¸‹ã«ã€å¾Œæ‰‹ãªã‚‰ï¼—æ®µç›®ã‚ˆã‚Šä¸Šã«æ‰“ã¤ï¼‰
 		for(suji=0x10;suji<=0x90;suji+=0x10) {
 			if (SorE==SELF) {
 				StartDan=3;
@@ -402,7 +402,7 @@ int Kyokumen::MakeLegalMoves(int SorE,Te *teBuf,int *pin)
 			}
 		}
 	}
-	// ‹â`”òÔ‚ÍA‚Ç‚±‚É‚Å‚à‘Å‚Ä‚é
+	// éŠ€ã€œé£›è»Šã¯ã€ã©ã“ã«ã§ã‚‚æ‰“ã¦ã‚‹
 	for(int koma=GI;koma<=HI;koma++) {
 		if (Hand[SorE|koma]>0) {
 			for(suji=0x10;suji<=0x90;suji+=0x10) {
@@ -418,7 +418,7 @@ int Kyokumen::MakeLegalMoves(int SorE,Te *teBuf,int *pin)
 	return teNum;
 }
 
-// ”Õ–Ê‚Ìfrom‚É‚ ‚é‹î‚ğ“®‚©‚·è‚ğ¶¬‚·‚éB
+// ç›¤é¢ã®fromã«ã‚ã‚‹é§’ã‚’å‹•ã‹ã™æ‰‹ã‚’ç”Ÿæˆã™ã‚‹ã€‚
 void Kyokumen::AddMoves(int SorE,int &teNum,Te *teTop,int from,int pin,int Rpin)
 {
 	switch(ban[from]) {
@@ -495,12 +495,12 @@ void Kyokumen::AddMoves(int SorE,int &teNum,Te *teTop,int from,int pin,int Rpin)
 		AddStraight(SorE,teNum,teTop,from,-15,pin,Rpin);
 		break;
 	case SOU:case EOU:
-		MoveKing(SorE,teNum,teTop,0);	// ‰¤è‚ª‚©‚©‚Á‚Ä‚¢‚é‚É‚ÍAAntiCheck‚Ì•û‚ªŒÄ‚Î‚ê‚é‚©‚çAKiki‚Í‚O‚Å‚·B
+		MoveKing(SorE,teNum,teTop,0);	// ç‹æ‰‹ãŒã‹ã‹ã£ã¦ã„ã‚‹æ™‚ã«ã¯ã€AntiCheckã®æ–¹ãŒå‘¼ã°ã‚Œã‚‹ã‹ã‚‰ã€Kikiã¯ï¼ã§ã™ã€‚
 	}
 }
 
-// ‚ ‚éêŠ‚Ì—˜‚«î•ñ‚ğì¬‚µ‚Ä•Ô‚·B•’i‚Íg‚í‚È‚¢ŠÖ”i·•ªŒvZ‚µ‚Ä‚¢‚é‚©‚çj‚¾‚ªA
-// ‘Å‚¿•à‹l‚ß‚Ìƒ`ƒFƒbƒN‚È‚ÇA‹î‚ğ‰¼‚É’u‚¢‚Ä‚İ‚Ä‰½‚©‚·‚é‚æ‚¤‚È‚Æ‚«‚Ég—p‚·‚éB
+// ã‚ã‚‹å ´æ‰€ã®åˆ©ãæƒ…å ±ã‚’ä½œæˆã—ã¦è¿”ã™ã€‚æ™®æ®µã¯ä½¿ã‚ãªã„é–¢æ•°ï¼ˆå·®åˆ†è¨ˆç®—ã—ã¦ã„ã‚‹ã‹ã‚‰ï¼‰ã ãŒã€
+// æ‰“ã¡æ­©è©°ã‚ã®ãƒã‚§ãƒƒã‚¯ãªã©ã€é§’ã‚’ä»®ã«ç½®ã„ã¦ã¿ã¦ä½•ã‹ã™ã‚‹ã‚ˆã†ãªã¨ãã«ä½¿ç”¨ã™ã‚‹ã€‚
 Kiki Kyokumen::CountControlS(int pos)
 {
 	Kiki ret=0;
@@ -517,8 +517,8 @@ Kiki Kyokumen::CountControlS(int pos)
 	return ret;
 }
 
-// ‚ ‚éêŠ‚Ì—˜‚«î•ñ‚ğì¬‚µ‚Ä•Ô‚·B•’i‚Íg‚í‚È‚¢ŠÖ”i·•ªŒvZ‚µ‚Ä‚¢‚é‚©‚çj‚¾‚ªA
-// ‘Å‚¿•à‹l‚ß‚Ìƒ`ƒFƒbƒN‚È‚ÇA‹î‚ğ‰¼‚É’u‚¢‚Ä‚İ‚Ä‰½‚©‚·‚é‚æ‚¤‚È‚Æ‚«‚Ég—p‚·‚éB
+// ã‚ã‚‹å ´æ‰€ã®åˆ©ãæƒ…å ±ã‚’ä½œæˆã—ã¦è¿”ã™ã€‚æ™®æ®µã¯ä½¿ã‚ãªã„é–¢æ•°ï¼ˆå·®åˆ†è¨ˆç®—ã—ã¦ã„ã‚‹ã‹ã‚‰ï¼‰ã ãŒã€
+// æ‰“ã¡æ­©è©°ã‚ã®ãƒã‚§ãƒƒã‚¯ãªã©ã€é§’ã‚’ä»®ã«ç½®ã„ã¦ã¿ã¦ä½•ã‹ã™ã‚‹ã‚ˆã†ãªã¨ãã«ä½¿ç”¨ã™ã‚‹ã€‚
 Kiki Kyokumen::CountControlE(int pos)
 {
 	Kiki ret=0;
@@ -535,8 +535,8 @@ Kiki Kyokumen::CountControlE(int pos)
 	return ret;
 }
 
-// ‚ ‚éêŠ‚ÉˆÚ“®‚Å‚«‚é‹î‚ğ‘S•”W‚ß‚ÄAKikiî•ñ‚É‚µ‚Ä•Ô‚·B
-// ‚±‚Ì‚Æ‚«Apin‚³‚ê‚Ä‚¢‚é‹î‚Ípin‚Ì•ûŒü‚É‚µ‚©“®‚¯‚È‚¢B
+// ã‚ã‚‹å ´æ‰€ã«ç§»å‹•ã§ãã‚‹é§’ã‚’å…¨éƒ¨é›†ã‚ã¦ã€Kikiæƒ…å ±ã«ã—ã¦è¿”ã™ã€‚
+// ã“ã®ã¨ãã€pinã•ã‚Œã¦ã„ã‚‹é§’ã¯pinã®æ–¹å‘ã«ã—ã‹å‹•ã‘ãªã„ã€‚
 Kiki Kyokumen::CountMove(int SorE,int pos,int *pin)
 {
 	Kiki ret=0;
@@ -553,66 +553,66 @@ Kiki Kyokumen::CountMove(int SorE,int pos,int *pin)
 	return ret;
 }
 
-// ‘Å‚¿•à‹l‚ß‚Ì”»’è
+// æ‰“ã¡æ­©è©°ã‚ã®åˆ¤å®š
 int Kyokumen::Utifudume(int SorE,int to,int *pin)
 {
 	if (SorE==SELF) {
-		// ‚Ü‚¸A‹Ê‚Ì“ª‚É•à‚ğ‘Å‚Âè‚¶‚á‚È‚¯‚ê‚Î‘Å‚¿•à‹l‚ß‚ÌS”z‚Í‚È‚¢B
+		// ã¾ãšã€ç‰ã®é ­ã«æ­©ã‚’æ‰“ã¤æ‰‹ã˜ã‚ƒãªã‘ã‚Œã°æ‰“ã¡æ­©è©°ã‚ã®å¿ƒé…ã¯ãªã„ã€‚
 		if (kingE+1!=to) {
 			return 0;
 		}
 	} else {
-		// ‚Ü‚¸A‹Ê‚Ì“ª‚É•à‚ğ‘Å‚Âè‚¶‚á‚È‚¯‚ê‚Î‘Å‚¿•à‹l‚ß‚ÌS”z‚Í‚È‚¢B
+		// ã¾ãšã€ç‰ã®é ­ã«æ­©ã‚’æ‰“ã¤æ‰‹ã˜ã‚ƒãªã‘ã‚Œã°æ‰“ã¡æ­©è©°ã‚ã®å¿ƒé…ã¯ãªã„ã€‚
 		if (kingS-1!=to) {
 			return 0;
 		}
 	}
-	//ÀÛ‚É•à‚ğ‘Å‚Á‚ÄŠm‚©‚ß‚Ä‚İ‚éB
+	//å®Ÿéš›ã«æ­©ã‚’æ‰“ã£ã¦ç¢ºã‹ã‚ã¦ã¿ã‚‹ã€‚
 	ban[to]=FU|SorE;
 	if (SorE==SELF) {
-		// ©•ª‚Ì—˜‚«‚ª‚ ‚Á‚½‚ç‘Šè‚Í‹Ê‚Åæ‚ê‚È‚¢@•@æ‚é“®‚«‚ğ—ñ‹“‚µ‚Ä‚İ‚½‚ç‹Ê‚Åæ‚éè‚µ‚©‚È‚¢
+		// è‡ªåˆ†ã®åˆ©ããŒã‚ã£ãŸã‚‰ç›¸æ‰‹ã¯ç‰ã§å–ã‚Œãªã„ã€€ï¼†ã€€å–ã‚‹å‹•ãã‚’åˆ—æŒ™ã—ã¦ã¿ãŸã‚‰ç‰ã§å–ã‚‹æ‰‹ã—ã‹ãªã„
 		if (controlS[to] && (CountMove(ENEMY,to,pin)==1<<1)) {
-			// ‹Ê‚É“¦‚°“¹‚ª‚ ‚é‚©‚Ç‚¤‚©‚ğƒ`ƒFƒbƒN
+			// ç‰ã«é€ƒã’é“ãŒã‚ã‚‹ã‹ã©ã†ã‹ã‚’ãƒã‚§ãƒƒã‚¯
 			for(int i=0;i<8;i++) {
 				KomaInf koma=ban[kingE+Direct[i]];
 				if (!(koma & ENEMY) && !CountControlS(kingE+Direct[i])) {
-					// “¦‚°“¹‚ª‚ ‚Á‚½‚Ì‚ÅA”Õ–Ê‚ğŒ³‚Ìó‘Ô‚É–ß‚µ‚ÄA
+					// é€ƒã’é“ãŒã‚ã£ãŸã®ã§ã€ç›¤é¢ã‚’å…ƒã®çŠ¶æ…‹ã«æˆ»ã—ã¦ã€
 					ban[to]=EMPTY;
-					// ‘Å‚¿•à‹l‚ß‚Å‚Í‚È‚©‚Á‚½B
+					// æ‰“ã¡æ­©è©°ã‚ã§ã¯ãªã‹ã£ãŸã€‚
 					return 0;
 				}
 			}
-			// ‹Ê‚Ì“¦‚°“¹‚à‚È‚¢‚Ì‚È‚çA‘Å‚¿•à‹l‚ßB”Õ–Ê‚Ìó‘Ô‚ÍŒ³‚É–ß‚·B
+			// ç‰ã®é€ƒã’é“ã‚‚ãªã„ã®ãªã‚‰ã€æ‰“ã¡æ­©è©°ã‚ã€‚ç›¤é¢ã®çŠ¶æ…‹ã¯å…ƒã«æˆ»ã™ã€‚
 			ban[to]=EMPTY;
 			return 1;
 		}
-		// ‹ÊˆÈŠO‚Åæ‚ê‚éè‚ª‚ ‚é‚©A‹Ê‚Åæ‚ê‚éB
+		// ç‰ä»¥å¤–ã§å–ã‚Œã‚‹æ‰‹ãŒã‚ã‚‹ã‹ã€ç‰ã§å–ã‚Œã‚‹ã€‚
 		ban[to]=EMPTY;
 		return 0;
 	} else {
-		// ©•ª‚Ì—˜‚«‚ª‚ ‚Á‚½‚ç‘Šè‚Í‹Ê‚Åæ‚ê‚È‚¢@•@æ‚é“®‚«‚ğ—ñ‹“‚µ‚Ä‚İ‚½‚ç‹Ê‚Åæ‚éè‚µ‚©‚È‚¢
+		// è‡ªåˆ†ã®åˆ©ããŒã‚ã£ãŸã‚‰ç›¸æ‰‹ã¯ç‰ã§å–ã‚Œãªã„ã€€ï¼†ã€€å–ã‚‹å‹•ãã‚’åˆ—æŒ™ã—ã¦ã¿ãŸã‚‰ç‰ã§å–ã‚‹æ‰‹ã—ã‹ãªã„
 		if (controlE[to] && (CountMove(SELF,to,pin)==1<<6)) {
-			// ‹Ê‚É“¦‚°“¹‚ª‚ ‚é‚©‚Ç‚¤‚©‚ğƒ`ƒFƒbƒN
+			// ç‰ã«é€ƒã’é“ãŒã‚ã‚‹ã‹ã©ã†ã‹ã‚’ãƒã‚§ãƒƒã‚¯
 			for(int i=0;i<8;i++) {
 				KomaInf koma=ban[kingS+Direct[i]];
 				if (!(koma & SELF) && !CountControlE(kingS+Direct[i])) {
-					// “¦‚°“¹‚ª‚ ‚Á‚½‚Ì‚ÅA”Õ–Ê‚ğŒ³‚Ìó‘Ô‚É–ß‚µ‚ÄA
+					// é€ƒã’é“ãŒã‚ã£ãŸã®ã§ã€ç›¤é¢ã‚’å…ƒã®çŠ¶æ…‹ã«æˆ»ã—ã¦ã€
 					ban[to]=EMPTY;
-					// ‘Å‚¿•à‹l‚ß‚Å‚Í‚È‚©‚Á‚½B
+					// æ‰“ã¡æ­©è©°ã‚ã§ã¯ãªã‹ã£ãŸã€‚
 					return 0;
 				}
 			}
-			// ‹Ê‚Ì“¦‚°“¹‚à‚È‚¢‚Ì‚È‚çA‘Å‚¿•à‹l‚ßB”Õ–Ê‚Ìó‘Ô‚ÍŒ³‚É–ß‚·B
+			// ç‰ã®é€ƒã’é“ã‚‚ãªã„ã®ãªã‚‰ã€æ‰“ã¡æ­©è©°ã‚ã€‚ç›¤é¢ã®çŠ¶æ…‹ã¯å…ƒã«æˆ»ã™ã€‚
 			ban[to]=EMPTY;
 			return 1;
 		}
-		// ‹ÊˆÈŠO‚Åæ‚ê‚éè‚ª‚ ‚é‚©A‹Ê‚Åæ‚ê‚éB
+		// ç‰ä»¥å¤–ã§å–ã‚Œã‚‹æ‰‹ãŒã‚ã‚‹ã‹ã€ç‰ã§å–ã‚Œã‚‹ã€‚
 		ban[to]=EMPTY;
 		return 0;
 	}
 }
 
-// ‚ ‚éêŠitoj‚É‹î‚ğ‘Å‚Âè‚Ì¶¬
+// ã‚ã‚‹å ´æ‰€ï¼ˆtoï¼‰ã«é§’ã‚’æ‰“ã¤æ‰‹ã®ç”Ÿæˆ
 void Kyokumen::PutTo(int SorE,int &teNum,Te *teTop,int to,int *pin)
 {
 	int dan=to &0x0f;
@@ -620,8 +620,8 @@ void Kyokumen::PutTo(int SorE,int &teNum,Te *teTop,int to,int *pin)
 		dan=10-dan;
 	}
 	if (Hand[SorE|FU]>0 && dan>1) {
-		// •à‚ğ‘Å‚Âè‚ğ¶¬
-		// “ñ•àƒ`ƒFƒbƒN
+		// æ­©ã‚’æ‰“ã¤æ‰‹ã‚’ç”Ÿæˆ
+		// äºŒæ­©ãƒã‚§ãƒƒã‚¯
 		int suji=to & 0xf0;
 		int nifu=0;
 		for(int d=1;d<=9;d++) {
@@ -630,13 +630,13 @@ void Kyokumen::PutTo(int SorE,int &teNum,Te *teTop,int to,int *pin)
 				break;
 			}
 		}
-		// ‘Å‚¿•à‹l‚ß‚àƒ`ƒFƒbƒN
+		// æ‰“ã¡æ­©è©°ã‚ã‚‚ãƒã‚§ãƒƒã‚¯
 		if (!nifu && !Utifudume(SorE,to,pin)) {
 			teTop[teNum++]=Te(0,to,SorE|FU,EMPTY);
 		}
 	}
 	if (Hand[SorE|KY]>0 && dan>1) {
-		// ‚ğ‘Å‚Âè‚ğ¶¬
+		// é¦™ã‚’æ‰“ã¤æ‰‹ã‚’ç”Ÿæˆ
 		teTop[teNum++]=Te(0,to,SorE|KY,EMPTY);
 	}
 	if (Hand[SorE|KE]>0 && dan>2) {
@@ -649,13 +649,13 @@ void Kyokumen::PutTo(int SorE,int &teNum,Te *teTop,int to,int *pin)
 	}
 }
 
-// ‰¤è‚ğó‚¯‚éè‚Ì¶¬
+// ç‹æ‰‹ã‚’å—ã‘ã‚‹æ‰‹ã®ç”Ÿæˆ
 int Kyokumen::AntiCheck(int SorE,Te *teBuf,int *pin,Kiki kiki)
 {
 	int king;
 	int teNum=0;
 	if ((kiki & (kiki-1))!=0) {
-        //—¼‰¤è‚Í‹Ê‚ğ“®‚©‚·‚µ‚©‚È‚¢
+        //ä¸¡ç‹æ‰‹ã¯ç‰ã‚’å‹•ã‹ã™ã—ã‹ãªã„
         MoveKing(SorE,teNum, teBuf, kiki);
 	} else {
 		if (SorE==SELF) {
@@ -673,33 +673,33 @@ int Kyokumen::AntiCheck(int SorE,Te *teBuf,int *pin,Kiki kiki)
 		} else {
 			check = search(king,-Direct[id-16]);
 		}
-        //‰¤è‹î‚ğæ‚é
+        //ç‹æ‰‹é§’ã‚’å–ã‚‹
         MoveTo(SorE,teNum, teBuf, check, pin);
 		
-        //‹Ê‚ğ“®‚©‚·
+        //ç‰ã‚’å‹•ã‹ã™
         MoveKing(SorE,teNum, teBuf, kiki);
 
 		if (id >= 16) {
-            //‡‹î‚ğ‚·‚éè‚ğ¶¬‚·‚é
+            //åˆé§’ã‚’ã™ã‚‹æ‰‹ã‚’ç”Ÿæˆã™ã‚‹
             int i;
             for (i = king - Direct[id-16]; ban[i] == EMPTY; i -= Direct[id-16]) {
-				MoveTo(SorE,teNum, teBuf, i, pin); //ˆÚ“®‡
+				MoveTo(SorE,teNum, teBuf, i, pin); //ç§»å‹•åˆ
             }
             for (i = king - Direct[id-16]; ban[i] == EMPTY; i -= Direct[id-16]) {
-				PutTo(SorE,teNum, teBuf, i, pin);  //‹î‚ğ‘Å‚Â‡
+				PutTo(SorE,teNum, teBuf, i, pin);  //é§’ã‚’æ‰“ã¤åˆ
             }
         } 
 	}
 	return teNum;
 }
 
-// ‹Ê‚ğ“®‚©‚·è‚Ì¶¬
-// •’Ê‚Ì‹î‚Æˆá‚¢A‘Šè‚Ì—˜‚«‚Ì‚ ‚é‚Æ‚±‚ë‚É‚Í“®‚¯‚È‚¢‚Ì‚ÅA‚»‚Ì‚½‚ß‚Ì“Áê‚Èˆ—‚ğ‚µ‚Ä‚¢‚Ü‚·B
+// ç‰ã‚’å‹•ã‹ã™æ‰‹ã®ç”Ÿæˆ
+// æ™®é€šã®é§’ã¨é•ã„ã€ç›¸æ‰‹ã®åˆ©ãã®ã‚ã‚‹ã¨ã“ã‚ã«ã¯å‹•ã‘ãªã„ã®ã§ã€ãã®ãŸã‚ã®ç‰¹æ®Šãªå‡¦ç†ã‚’ã—ã¦ã„ã¾ã™ã€‚
 void Kyokumen::MoveKing(int SorE,int &teNum,Te *teTop,Kiki kiki)
 {
 	int i;
-	int id = -1;	//—×Ú‰¤è‹î‚ÌˆÊ’u‚Ìid
-	// —¼‰¤è‚Å‚È‚¢‚È‚ç‰¤è‹î‚ÌˆÊ’u‚ğ’T‚·
+	int id = -1;	//éš£æ¥ç‹æ‰‹é§’ã®ä½ç½®ã®id
+	// ä¸¡ç‹æ‰‹ã§ãªã„ãªã‚‰ç‹æ‰‹é§’ã®ä½ç½®ã‚’æ¢ã™
 	for (i = 0; i < 8; i++) {
 		if (kiki & (1 << i)) {
 			id = i;
@@ -707,18 +707,18 @@ void Kyokumen::MoveKing(int SorE,int &teNum,Te *teTop,Kiki kiki)
 		}
 	}
 	if (id >= 0) {
-		// —×Ú‚Ì‰¤è Å‰‚Éæ‚éè‚ğ¶¬‚·‚é‚Ì‚¾
+		// éš£æ¥ã®ç‹æ‰‹ æœ€åˆã«å–ã‚‹æ‰‹ã‚’ç”Ÿæˆã™ã‚‹ã®ã 
 		if (SorE==SELF) {
 			KomaInf koma=ban[kingS-Direct[id]];
 			if (( koma==EMPTY || (koma & ENEMY))
-				&& !CountControlE(kingS - Direct[id]) //“G‚Ì‹î‚ªŒø‚¢‚Ä‚¢‚È‚¢
-				&& !(kiki & (1 << (23-id))))  //“G‚Ì”ò‹î‚ÅŠÑ‚©‚ê‚Ä‚¢‚È‚¢
+				&& !CountControlE(kingS - Direct[id]) //æ•µã®é§’ãŒåŠ¹ã„ã¦ã„ãªã„
+				&& !(kiki & (1 << (23-id))))  //æ•µã®é£›é§’ã§è²«ã‹ã‚Œã¦ã„ãªã„
 			AddMove(SorE,teNum, teTop, kingS, -Direct[id], 0);
 		} else {
 			KomaInf koma=ban[kingE-Direct[id]];
 			if (( koma==EMPTY || (koma & SELF))
-				&& !CountControlS(kingE - Direct[id]) //“G‚Ì‹î‚ªŒø‚¢‚Ä‚¢‚È‚¢
-				&& !(kiki & (1 << (23-id))))  //“G‚Ì”ò‹î‚ÅŠÑ‚©‚ê‚Ä‚¢‚È‚¢
+				&& !CountControlS(kingE - Direct[id]) //æ•µã®é§’ãŒåŠ¹ã„ã¦ã„ãªã„
+				&& !(kiki & (1 << (23-id))))  //æ•µã®é£›é§’ã§è²«ã‹ã‚Œã¦ã„ãªã„
 			AddMove(SorE,teNum, teTop, kingE, -Direct[id], 0);
 		}
 	}
@@ -727,20 +727,20 @@ void Kyokumen::MoveKing(int SorE,int &teNum,Te *teTop,Kiki kiki)
 		if (SorE==SELF) {
 			KomaInf koma=ban[kingS-Direct[i]];
 			if (( koma==EMPTY || (koma & ENEMY))
-				&& !CountControlE(kingS - Direct[i]) //“G‚Ì‹î‚ªŒø‚¢‚Ä‚¢‚È‚¢
-				&& !(kiki & (1 << (23-i))))  //“G‚Ì”ò‹î‚ÅŠÑ‚©‚ê‚Ä‚¢‚È‚¢
+				&& !CountControlE(kingS - Direct[i]) //æ•µã®é§’ãŒåŠ¹ã„ã¦ã„ãªã„
+				&& !(kiki & (1 << (23-i))))  //æ•µã®é£›é§’ã§è²«ã‹ã‚Œã¦ã„ãªã„
 			AddMove(SorE,teNum, teTop, kingS, -Direct[i], 0);
 		} else {
 			KomaInf koma=ban[kingE-Direct[i]];
 			if (( koma==EMPTY || (koma & SELF))
-				&& !CountControlS(kingE - Direct[i]) //“G‚Ì‹î‚ªŒø‚¢‚Ä‚¢‚È‚¢
-				&& !(kiki & (1 << (23-i))))  //“G‚Ì”ò‹î‚ÅŠÑ‚©‚ê‚Ä‚¢‚È‚¢
+				&& !CountControlS(kingE - Direct[i]) //æ•µã®é§’ãŒåŠ¹ã„ã¦ã„ãªã„
+				&& !(kiki & (1 << (23-i))))  //æ•µã®é£›é§’ã§è²«ã‹ã‚Œã¦ã„ãªã„
 			AddMove(SorE,teNum, teTop, kingE, -Direct[i], 0);
 		}
 	}
 }
 
-// è‚Ì¶¬F¬‚èE•s¬‚è‚àˆÓ¯‚µ‚ÄA‹î‚Ì“®‚­è‚ğ¶¬‚·‚éB
+// æ‰‹ã®ç”Ÿæˆï¼šæˆã‚Šãƒ»ä¸æˆã‚Šã‚‚æ„è­˜ã—ã¦ã€é§’ã®å‹•ãæ‰‹ã‚’ç”Ÿæˆã™ã‚‹ã€‚
 void Kyokumen::AddMove(int SorE,int &teNum,Te *teTop,int from,int diff,int pin,int Rpin)
 {
 	if (Rpin==diff||Rpin==-diff) {
@@ -752,16 +752,16 @@ void Kyokumen::AddMove(int SorE,int &teNum,Te *teTop,int from,int diff,int pin,i
 
 	if ((pin==0 || pin==diff || pin==-diff) && !(ban[to]&SorE)) {
 		if (ban[from]==SKE && dan<=2) {
-			// •K‚¸¬‚é
+			// å¿…ãšæˆã‚‹
 			teTop[teNum++]=Te(from,to,ban[from],ban[to],1);
 		} else if ((ban[from]==SFU || ban[from]==SKY) && dan<=1) {
-			// •K‚¸¬‚é
+			// å¿…ãšæˆã‚‹
 			teTop[teNum++]=Te(from,to,ban[from],ban[to],1);
 		} else if (ban[from]==EKE && dan>=8) {
-			// •K‚¸¬‚é
+			// å¿…ãšæˆã‚‹
 			teTop[teNum++]=Te(from,to,ban[from],ban[to],1);
 		} else if ((ban[from]==EFU || ban[from]==EKY) && dan>=9) {
-			// •K‚¸¬‚é
+			// å¿…ãšæˆã‚‹
 			teTop[teNum++]=Te(from,to,ban[from],ban[to],1);
 		} else {
 			if (SorE==SELF && (fromDan<=3 || dan <=3) && CanPromote[ban[from]]) {
@@ -769,13 +769,13 @@ void Kyokumen::AddMove(int SorE,int &teNum,Te *teTop,int from,int diff,int pin,i
 			} else if (SorE==ENEMY && (fromDan>=7 || dan>=7) && CanPromote[ban[from]]){
 				teTop[teNum++]=Te(from,to,ban[from],ban[to],1);
 			}
-			// ¬‚ç‚È‚¢è‚à¶¬‚·‚éB
+			// æˆã‚‰ãªã„æ‰‹ã‚‚ç”Ÿæˆã™ã‚‹ã€‚
 			teTop[teNum++]=Te(from,to,ban[from],ban[to],0);
 		}
 	}
 }
 
-// ”òÔŠpÔ‚ª‚Ü‚Á‚·‚®‚Éi‚Şè‚Ì¶¬
+// é£›è»Šè§’é¦™è»ŠãŒã¾ã£ã™ãã«é€²ã‚€æ‰‹ã®ç”Ÿæˆ
 void Kyokumen::AddStraight(int SorE,int &teNum,Te *teTop,int from,int dir,int pin,int Rpin)
 {
 	if (dir==Rpin || dir==-Rpin) {
@@ -783,18 +783,18 @@ void Kyokumen::AddStraight(int SorE,int &teNum,Te *teTop,int from,int dir,int pi
 	}
 	int i;
 	if (pin==0 || pin==dir || pin==-dir) {
-		// ‹ó”’‚ÌŠÔA“®‚­è‚ğ¶¬‚·‚é
+		// ç©ºç™½ã®é–“ã€å‹•ãæ‰‹ã‚’ç”Ÿæˆã™ã‚‹
 		for(i=dir;ban[from+i]==EMPTY;i+=dir) {
 			AddMove(SorE,teNum,teTop,from,i,0);
 		}
-		// –¡•û‚Ì‹î‚Å‚È‚¢‚È‚çA‚»‚±‚Ö“®‚­
+		// å‘³æ–¹ã®é§’ã§ãªã„ãªã‚‰ã€ãã“ã¸å‹•ã
 		if (!(ban[from+i] & SorE)) {
 			AddMove(SorE,teNum,teTop,from,i,0);
 		}
 	}
 }
 
-//to‚É“®‚­è‚Ì¶¬
+//toã«å‹•ãæ‰‹ã®ç”Ÿæˆ
 void Kyokumen::MoveTo(int SorE,int &teNum,Te *teTop,int to,int* pin)
 {
 	int p;
@@ -814,18 +814,18 @@ void Kyokumen::MoveTo(int SorE,int &teNum,Te *teTop,int to,int* pin)
 	}
 }
 
-// ‚»‚ê‚Á‚Û‚­•\¦‚·‚éB
+// ãã‚Œã£ã½ãè¡¨ç¤ºã™ã‚‹ã€‚
 void Kyokumen::FPrint(FILE *fp)
 {
 	int x,y;
 	y = 0;
 	fprintf(fp,"Hash:%016I64x Hand:%016I64x Kyokumen:%016I64x\n",HashVal,HandHashVal,KyokumenHashVal);
 
-	fprintf(fp,"‚¿‹îF");
+	fprintf(fp,"æŒã¡é§’ï¼š");
 	for (x = EHI; x >=EFU; x--) {
 		if (Hand[x] > 1) {
 			y = 1;
-			fprintf(fp,"%s%2.2s", komaStr2[x], "ˆê“ñOlŒÜ˜Zµ”ª‹ã101112131415161718"+2*Hand[x]-2);
+			fprintf(fp,"%s%2.2s", komaStr2[x], "ä¸€äºŒä¸‰å››äº”å…­ä¸ƒå…«ä¹101112131415161718"+2*Hand[x]-2);
 		} else if (Hand[x] == 1) {
 			y = 1;
 			fprintf(fp,"%s", komaStr2[x]);
@@ -834,25 +834,25 @@ void Kyokumen::FPrint(FILE *fp)
 	if (y) {
 		fprintf(fp,"\n");
 	} else {
-		fprintf(fp,"‚È‚µ\n");
+		fprintf(fp,"ãªã—\n");
 	}
-	fprintf(fp,"  ‚X ‚W ‚V ‚U ‚T ‚S ‚R ‚Q ‚P \n");
+	fprintf(fp,"  ï¼™ ï¼˜ ï¼— ï¼– ï¼• ï¼” ï¼“ ï¼’ ï¼‘ \n");
 	fprintf(fp,"+---------------------------+\n");
 	for(y=1;y<=9;y++) {
 		fprintf(fp,"|");
 		for(x=9;x>=1;x--) {
 			fprintf(fp,komaStr[ban[x*16+y]]);
 		}
-		fprintf(fp,"|%2.2s","ˆê“ñOlŒÜ˜Zµ”ª‹ã" + y*2-2);
+		fprintf(fp,"|%2.2s","ä¸€äºŒä¸‰å››äº”å…­ä¸ƒå…«ä¹" + y*2-2);
 		fprintf(fp,"\n");
 	}
 	fprintf(fp,"+---------------------------+\n");
-	fprintf(fp,"‚¿‹îF");
+	fprintf(fp,"æŒã¡é§’ï¼š");
 	y = 0;
 	for (x = SHI; x >= SFU; x--) {
 		if (Hand[x] > 1) {
 			y = 1;
-			fprintf(fp,"%s%2.2s", komaStr2[x], "ˆê“ñOlŒÜ˜Zµ”ª‹ã101112131415161718"+2*Hand[x]-2);
+			fprintf(fp,"%s%2.2s", komaStr2[x], "ä¸€äºŒä¸‰å››äº”å…­ä¸ƒå…«ä¹101112131415161718"+2*Hand[x]-2);
 		} else if (Hand[x] == 1) {
 			y = 1;
 			fprintf(fp,"%s", komaStr2[x]);
@@ -861,7 +861,7 @@ void Kyokumen::FPrint(FILE *fp)
 	if (y) {
 		fprintf(fp,"\n");
 	} else {
-		fprintf(fp,"‚È‚µ\n");
+		fprintf(fp,"ãªã—\n");
 	}
 }
 
@@ -869,7 +869,7 @@ char *komaStrForDump[]={
 "EMP","   ","   ","   ","   ","   ","   ","   ","   ","   ","   ","   ","   ","   ","   ","   ",
 "   ","SFU","SKY","SKE","SGI","SKI","SKA","SHI","SOU","STO","SNY","SNK","SNG","SKI","SUM","SRY",
 "   ","EFU","EKY","EKE","EGI","EKI","EKA","EHI","EOU","ETO","ENY","ENK","ENG","EKI","EUM","ERY",
-" •Ç","   ","   ","   ","   ","   ","   ","   ","   ","   ","   ","   ","   ","   ","   ","   ",
+" å£","   ","   ","   ","   ","   ","   ","   ","   ","   ","   ","   ","   ","   ","   ","   ",
 };
 
 
@@ -895,7 +895,7 @@ void Kyokumen::Dump()
 	printf("};\n");
 }
 
-// ‘æ‚RÍ‚Å’Ç‰ÁBŒğŠ·’l‚ğ‹‚ß‚éB
+// ç¬¬ï¼“ç« ã§è¿½åŠ ã€‚äº¤æ›å€¤ã‚’æ±‚ã‚ã‚‹ã€‚
 int kyori(int p1,int p2)
 {
 	return max(abs(p1/16-p2/16),abs((p1 & 0x0f)-(p2 &0x0f)));
@@ -903,11 +903,11 @@ int kyori(int p1,int p2)
 
 int Kyokumen::IsCorrectMove(Te &te)
 {
-	// ‘æ5Í‚Å’Ç‰ÁB‹î‘Å‚¿‚Ìê‡‚ÉA³‚µ‚¢è‚©‚Ç‚¤‚©ƒ`ƒFƒbƒN‚·‚éB
+	// ç¬¬5ç« ã§è¿½åŠ ã€‚é§’æ‰“ã¡ã®å ´åˆã«ã€æ­£ã—ã„æ‰‹ã‹ã©ã†ã‹ãƒã‚§ãƒƒã‚¯ã™ã‚‹ã€‚
 	if (te.from==0) {
 		if (ban[te.to]!=EMPTY) return 0;
 		if (te.koma==SFU) {
-			// “ñ•à‚Æ‘Å‚¿•à‹l‚ß‚Ìƒ`ƒFƒbƒN
+			// äºŒæ­©ã¨æ‰“ã¡æ­©è©°ã‚ã®ãƒã‚§ãƒƒã‚¯
 			for(int dan=1;dan<=9;dan++) {
 				if (ban[(te.to&0xf0)+dan]==SFU) return 0;
 			}
@@ -918,7 +918,7 @@ int Kyokumen::IsCorrectMove(Te &te)
 			}
 		}
 		if (te.koma==EFU) {
-			// “ñ•à‚Æ‘Å‚¿•à‹l‚ß‚Ìƒ`ƒFƒbƒN
+			// äºŒæ­©ã¨æ‰“ã¡æ­©è©°ã‚ã®ãƒã‚§ãƒƒã‚¯
 			for(int dan=1;dan<=9;dan++) {
 				if (ban[(te.to&0xf0)+dan]==EFU) return 0;
 			}
@@ -956,7 +956,7 @@ int Kyokumen::IsCorrectMove(Te &te)
 		te.capture=ban[te.to];
 		return 1;
 	}
-	// ƒWƒƒƒ“ƒv‚È‚Ì‚ÅA“r’†‚É×–‚‚È‹î‚ª‚¢‚È‚¢‚©‚Ç‚¤‚©ƒ`ƒFƒbƒN‚·‚é
+	// ã‚¸ãƒ£ãƒ³ãƒ—ãªã®ã§ã€é€”ä¸­ã«é‚ªé­”ãªé§’ãŒã„ãªã„ã‹ã©ã†ã‹ãƒã‚§ãƒƒã‚¯ã™ã‚‹
 	for(int i=1,pos=te.from+dir;i<d;i++,pos=pos+dir) {
 		if (ban[pos]!=EMPTY) {
 			return 0;
@@ -969,7 +969,7 @@ int Kyokumen::IsCorrectMove(Te &te)
 int Kyokumen::IsLegalMove(int SorE,Te &te)
 {
 	if (!(te.koma & SorE)) {
-		// ©•ª‚Ì‹î‚Å‚È‚¢‹î‚ğ“®‚©‚µ‚Ä‚¢‚é
+		// è‡ªåˆ†ã®é§’ã§ãªã„é§’ã‚’å‹•ã‹ã—ã¦ã„ã‚‹
 		return 0;
 	}
 	if (te.from<OU) {
@@ -978,11 +978,11 @@ int Kyokumen::IsLegalMove(int SorE,Te &te)
 		if (ban[te.from]!=te.koma) return 0;
 	}
 	if (ban[te.to] & SorE) {
-		// ©•ª‚Ì‹î‚ğæ‚Á‚Ä‚¢‚é
+		// è‡ªåˆ†ã®é§’ã‚’å–ã£ã¦ã„ã‚‹
 		return 0;
 	}
 	if (IsCorrectMove(te)) {
-		// ©‹Ê‚É‰¤è‚ğ‚©‚¯‚Ä‚¢‚È‚¢‚©AÀÛ‚É“®‚©‚µ‚Ä’²‚×‚é
+		// è‡ªç‰ã«ç‹æ‰‹ã‚’ã‹ã‘ã¦ã„ãªã„ã‹ã€å®Ÿéš›ã«å‹•ã‹ã—ã¦èª¿ã¹ã‚‹
 		Kyokumen kk(*this);
 		kk.Move(SorE,te);
 		if (SorE==SELF && kk.controlE[kk.kingS]) {
@@ -1013,7 +1013,7 @@ int Kyokumen::EvalMin(Te *AtackS,int NumAtackS,Te *AtackE,int NumAtackE)
 			}
 			AtackE[0]=t;
 		} else {
-			// ‘¼‚Éè‚ª‚È‚¢æ‚ê‚È‚¢B
+			// ä»–ã«æ‰‹ãŒãªã„ï¼å–ã‚Œãªã„ã€‚
 			return v;
 		}
 		AtackE[0].capture=ban[AtackE[0].to];
@@ -1029,7 +1029,7 @@ int Kyokumen::EvalMax(Te *AtackS,int NumAtackS,Te *AtackE,int NumAtackE)
 {
 	int v=value;
 	if (NumAtackS>0) {
-		// ×–‚‹î‚Ìˆ—
+		// é‚ªé­”é§’ã®å‡¦ç†
 		int k=0;
 		while(!IsCorrectMove(AtackS[k]) && k<NumAtackS) {
 			k++;
@@ -1042,7 +1042,7 @@ int Kyokumen::EvalMax(Te *AtackS,int NumAtackS,Te *AtackE,int NumAtackE)
 			}
 			AtackS[0]=t;
 		} else {
-			// ‘¼‚Éè‚ª‚È‚¢æ‚ê‚È‚¢B
+			// ä»–ã«æ‰‹ãŒãªã„ï¼å–ã‚Œãªã„ã€‚
 			return v;
 		}
 		AtackS[0].capture=ban[AtackS[0].to];
@@ -1060,11 +1060,11 @@ int Kyokumen::Eval(int position)
 		return 0;
 	}
 	if ((ban[position]&SELF) && !controlE[position]) {
-		// æ‚ç‚ê‚éS”z‚ª‚È‚¢
+		// å–ã‚‰ã‚Œã‚‹å¿ƒé…ãŒãªã„
 		return 0;
 	}
 	if ((ban[position]&ENEMY) && !controlS[position]) {
-		// æ‚ç‚ê‚éS”z‚ª‚È‚¢
+		// å–ã‚‰ã‚Œã‚‹å¿ƒé…ãŒãªã„
 		return 0;
 	}
 
@@ -1072,9 +1072,9 @@ int Kyokumen::Eval(int position)
 	Te teTop[40];
 	int ToPos=position;
 
-	// AtackCount‚ğ“¾‚é‚æ‚¤‚ÉA‹î‚ÌƒŠƒXƒg‚ğ“¾‚é
+	// AtackCountã‚’å¾—ã‚‹ã‚ˆã†ã«ã€é§’ã®ãƒªã‚¹ãƒˆã‚’å¾—ã‚‹
 	Te *AtackS=teTop;
-	// ˆêŒÂŠ‚Ö‚Ì—˜‚«‚ÍAÅ‘å—×Ú8+Œj”n2+”ò”òŠpŠp=18‚¾‚©‚çB
+	// ä¸€å€‹æ‰€ã¸ã®åˆ©ãã¯ã€æœ€å¤§éš£æ¥8+æ¡‚é¦¬2+é£›é£›è§’è§’é¦™é¦™é¦™é¦™=18ã ã‹ã‚‰ã€‚
 	Te *AtackE=teTop+18;
 
 	int AtackCountE=0;
@@ -1097,7 +1097,7 @@ int Kyokumen::Eval(int position)
 		PromoteE=0;
 	}
 
-	// Œj”n‚Ì—˜‚«‚Í•Ê‚É”‚¦‚é
+	// æ¡‚é¦¬ã®åˆ©ãã¯åˆ¥ã«æ•°ãˆã‚‹
 	for (i = 0; i < 8; i++) {
 		pos2=pos;
 		if (controlS[pos] & b) {
@@ -1129,7 +1129,7 @@ int Kyokumen::Eval(int position)
 				while(ban[pos2]==EMPTY) {
 					pos2-=Direct[i];
 				}
-//				if (ban[pos2]==WALL) continue;//•s—v‚È‚Í‚¸‚È‚Ì‚É
+//				if (ban[pos2]==WALL) continue;//ä¸è¦ãªã¯ãšãªã®ã«
 				if ((ban[pos2])&ENEMY) {
 					AtackE[AtackCountE].from=pos2;
 					AtackE[AtackCountE].koma=ban[pos2];
@@ -1156,7 +1156,7 @@ int Kyokumen::Eval(int position)
 		b<<=1;
 		bj<<=1;
 	}
-	// Œj”n‚Ì—˜‚«
+	// æ¡‚é¦¬ã®åˆ©ã
 	b=1<<8;
 	for(i=8;i<12;i++) {
 		if (controlS[pos] & b) {
@@ -1185,7 +1185,7 @@ int Kyokumen::Eval(int position)
 		}
 		b<<=1;
 	}
-	// ‹î‚Ì‰¿’l‚Åƒ\[ƒgB
+	// é§’ã®ä¾¡å€¤ã§ã‚½ãƒ¼ãƒˆã€‚
 	for (i=0; i < AtackCountS-1; i++) {
 		int max_id = i; int max_val = KomaValue[AtackS[i].koma];
 		for (int j = i+1; j < AtackCountS ; j++) {
@@ -1199,12 +1199,12 @@ int Kyokumen::Eval(int position)
 				}
 			}
 		}
-		//Å‘å’l‚Æ‚ÌŒğŠ·
+		//æœ€å¤§å€¤ã¨ã®äº¤æ›
 		if (i!=max_id) {
 			swap(AtackS[i],AtackS[max_id]);
 		}
 	}
-	// ‹î‚Ì‰¿’l‚Åƒ\[ƒgB
+	// é§’ã®ä¾¡å€¤ã§ã‚½ãƒ¼ãƒˆã€‚
 	for (i=0; i < AtackCountE-1; i++) {
 		int max_id = i; int max_val = KomaValue[AtackE[i].koma];
 		for (int j = i+1; j < AtackCountE ; j++) {
@@ -1218,7 +1218,7 @@ int Kyokumen::Eval(int position)
 				}
 			}
 		}
-		//Å‘å’l‚Æ‚ÌŒğŠ·
+		//æœ€å¤§å€¤ã¨ã®äº¤æ›
 		if (i!=max_id) {
 			swap(AtackE[i],AtackE[max_id]);
 		}
@@ -1242,8 +1242,8 @@ int Kyokumen::Eval(int position)
 
 int Kyokumen::BestEval(int SorE)
 {
-	// SorE‚Ì—˜‚«‚Ì‚ ‚é“G‚Ì‹îi&SorE==0‚Ì‹îj‚É‚Â‚¢‚ÄAEval‚ğŒÄ‚Ño‚µ‚ÄA
-	// ˆê”Ô‚¢‚¢ŒğŠ·’l‚ğ’T‚·B
+	// SorEã®åˆ©ãã®ã‚ã‚‹æ•µã®é§’ï¼ˆ&SorE==0ã®é§’ï¼‰ã«ã¤ã„ã¦ã€Evalã‚’å‘¼ã³å‡ºã—ã¦ã€
+	// ä¸€ç•ªã„ã„äº¤æ›å€¤ã‚’æ¢ã™ã€‚
 	int best=0;
 	for(int suji=0x10;suji<=0x90;suji+=0x10) {
 		for(int dan=1;dan<=9;dan++) {
@@ -1266,118 +1266,118 @@ int KyokumenKomagumi::MamorigomaValueS[16*11][16*11];
 int KyokumenKomagumi::MamorigomaValueE[16*11][16*11];
 
 int DanValue[ERY+1][10]={
-//‹ó
+//ç©º
 	{0,0,0,0,0,0,0,0,0,0},
-//‹ó
+//ç©º
 	{0,0,0,0,0,0,0,0,0,0},
-//‹ó
+//ç©º
 	{0,0,0,0,0,0,0,0,0,0},
-//‹ó
+//ç©º
 	{0,0,0,0,0,0,0,0,0,0},
-//‹ó
+//ç©º
 	{0,0,0,0,0,0,0,0,0,0},
-//‹ó
+//ç©º
 	{0,0,0,0,0,0,0,0,0,0},
-//‹ó
+//ç©º
 	{0,0,0,0,0,0,0,0,0,0},
-//‹ó
+//ç©º
 	{0,0,0,0,0,0,0,0,0,0},
-//‹ó
+//ç©º
 	{0,0,0,0,0,0,0,0,0,0},
-//‹ó
+//ç©º
 	{0,0,0,0,0,0,0,0,0,0},
-//‹ó
+//ç©º
 	{0,0,0,0,0,0,0,0,0,0},
-//‹ó
+//ç©º
 	{0,0,0,0,0,0,0,0,0,0},
-//‹ó
+//ç©º
 	{0,0,0,0,0,0,0,0,0,0},
-//‹ó
+//ç©º
 	{0,0,0,0,0,0,0,0,0,0},
-//‹ó
+//ç©º
 	{0,0,0,0,0,0,0,0,0,0},
-//‹ó
+//ç©º
 	{0,0,0,0,0,0,0,0,0,0},
-//‹ó
+//ç©º
 	{0,0,0,0,0,0,0,0,0,0},
-//•à
+//æ­©
 	{ 0,  0,15,15,15,3,1, 0, 0, 0},
-//
+//é¦™
 	{ 0, 1,2,3,4,5,6,7,8,9},
-//Œj
+//æ¡‚
 	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-//‹â
+//éŠ€
 	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-//‹à
+//é‡‘
 	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-//Šp
+//è§’
 	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-//”ò
+//é£›
 	{ 0,10,10,10, 0, 0, 0,  -5, 0, 0},
-//‰¤
+//ç‹
 	{ 0,1200,1200,900,600,300,-10,0,0,0},
-//‚Æ
+//ã¨
 	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-//ˆÇ
+//æ
 	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-//Œ\
+//åœ­
 	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-//‘S
+//å…¨
 	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-//‹à
+//é‡‘
 	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-//”n
+//é¦¬
 	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-//—´
+//é¾
 	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-//‹ó
+//ç©º
 	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-//•à
+//æ­©
 	{ 0, 0, 0, 0, -1, -3,-15,-15,-15, 0},
-//
+//é¦™
 	{ 0,-9,-8,-7, -6, -5, -4, -3, -2,-1},
-//Œj
+//æ¡‚
 	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-//‹â
+//éŠ€
 	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-//‹à
+//é‡‘
 	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-//Šp
+//è§’
 	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-//”ò
+//é£›
 	{ 0, 0, 0, 5, 0, 0, 0,-10,-10,-10},
-//‰¤
+//ç‹
 	{ 0, 0, 0, 0,10,-300,-600,-900,-1200,-1200},
-//‚Æ
+//ã¨
 	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-//ˆÇ
+//æ
 	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-//Œ\
+//åœ­
 	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-//‘S
+//å…¨
 	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-//‹à
+//é‡‘
 	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-//”n
+//é¦¬
 	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-//—´
+//é¾
 	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 };
 
 enum {
-	IvsFURI,		// ‹”òÔ‘ÎU‚è”òÔ
-	IvsNAKA,		// ‹”òÔ‘Î’†”òÔ
-	FURIvsFURI,		// ‘ŠU‚è”òÔ
-	FURIvsI,		// U‚è”òÔ‘Î‹”òÔ
-	NAKAvsI,		// ’†”òÔ‘Î‹”òÔ
-	KAKUGAWARI,		// ŠpŠ·‚è
-	AIGAKARI,		// ‘ŠŠ|‚©‚èi‚Ü‚½‚Í‹”òÔ‚Ì‘ÎRŒnj
-	HUMEI			// íŒ`•s–¾
+	IvsFURI,		// å±…é£›è»Šå¯¾æŒ¯ã‚Šé£›è»Š
+	IvsNAKA,		// å±…é£›è»Šå¯¾ä¸­é£›è»Š
+	FURIvsFURI,		// ç›¸æŒ¯ã‚Šé£›è»Š
+	FURIvsI,		// æŒ¯ã‚Šé£›è»Šå¯¾å±…é£›è»Š
+	NAKAvsI,		// ä¸­é£›è»Šå¯¾å±…é£›è»Š
+	KAKUGAWARI,		// è§’æ›ã‚Š
+	AIGAKARI,		// ç›¸æ›ã‹ã‚Šï¼ˆã¾ãŸã¯å±…é£›è»Šã®å¯¾æŠ—ç³»ï¼‰
+	HUMEI			// æˆ¦å½¢ä¸æ˜
 };
 
 int JosekiKomagumiSGI[HUMEI+1][9][9]=
 {
-	{	// IvsFURI MˆÍ‚¢A”ü”ZA‹âŠ¥
+	{	// IvsFURI èˆŸå›²ã„ã€ç¾æ¿ƒã€éŠ€å† 
 		{-10,-10,-10,-10,-10,-10,-10,-10,-10},
 		{-10,-10,-10,-10,-10,-10,-10,-10,-10},
 		{-10,-10,-10,-10,-10,-10,-10,-10,-10},
@@ -1387,7 +1387,7 @@ int JosekiKomagumiSGI[HUMEI+1][9][9]=
 		{-10,  7, -8, -7, 10,-10, 10,  6,-10},
 		{-10, -2, -6, -5,-10,  6,-10,-10,-10},
 		{-10, -7,  0,-10,-10,-10,-10,-10,-10}
-	},{	// IvsNAKA@MˆÍ‚¢
+	},{	// IvsNAKAã€€èˆŸå›²ã„
 		{-10,-10,-10,-10,-10,-10,-10,-10,-10},
 		{-10,-10,-10,-10,-10,-10,-10,-10,-10},
 		{-10,-10,-10,-10,-10,-10,-10,-10,-10},
@@ -1397,7 +1397,7 @@ int JosekiKomagumiSGI[HUMEI+1][9][9]=
 		{-10, -5, -8, -7, 10,-10, 10,  6,-10},
 		{-10, -2, -3,  0,-10,  6,-10,-10,-10},
 		{-10, -7, -5,-10,-10,-10,-10,-10,-10}
-	},{ // FURIvsFURI@–î‘qi‹tjA”ü”ZA‹âŠ¥
+	},{ // FURIvsFURIã€€çŸ¢å€‰ï¼ˆé€†ï¼‰ã€ç¾æ¿ƒã€éŠ€å† 
 		{-10,-10,-10,-10,-10,-10,-10,-10,-10},
 		{-10,-10,-10,-10,-10,-10,-10,-10,-10},
 		{-10,-10,-10,-10,-10,-10,-10,-10,-10},
@@ -1407,7 +1407,7 @@ int JosekiKomagumiSGI[HUMEI+1][9][9]=
 		{-10,-10,-10,-10,-10,  5, 10, 10,-10},
 		{-10,-10,-10,-10,-10,-10,  0,-10,-10},
 		{-10,-10,-10,-10,-10,-10, -5,-10,-10}
-	},{ // FURIvsI ”ü”ZˆÍ‚¢A‹âŠ¥
+	},{ // FURIvsI ç¾æ¿ƒå›²ã„ã€éŠ€å† 
 		{-10,-10,-10,-10,-10,-10,-10,-10,-10},
 		{-10,-10,-10,-10,-10,-10,-10,-10,-10},
 		{-10,-10,-10,-10,-10,-10,-10,-10,-10},
@@ -1417,7 +1417,7 @@ int JosekiKomagumiSGI[HUMEI+1][9][9]=
 		{-10, -7,  4,  6,-10,-10,-10,  6,-10},
 		{-10,  2,  3,  3,-10,-10,  4,-10,-10},
 		{-10,-10,-10,  0,-10,-10,  0,-10,-10}
-	},{ // NAKAvsI ’†”òÔ
+	},{ // NAKAvsI ä¸­é£›è»Š
 		{-10,-10,-10,-10,-10,-10,-10,-10,-10},
 		{-10,-10,-10,-10,-10,-10,-10,-10,-10},
 		{-10,-10,-10,-10,-10,-10,-10,-10,-10},
@@ -1806,16 +1806,16 @@ void KyokumenKomagumi::InitKanagomaValue()
 		}
 	}
 }
-					  //‹ó•àŒj‹â‹àŠp”ò‰¤‚ÆˆÇŒ\‘S‹à”n—´
+					  //ç©ºæ­©é¦™æ¡‚éŠ€é‡‘è§’é£›ç‹ã¨æåœ­å…¨é‡‘é¦¬é¾
 int ShuubandoByAtack[]={0,1,1,2,3,3,3,4,4,3,3,3,3,3,4,5};
-						//‹ó•àŒj‹â ‹àŠp”ò‰¤ ‚Æ ˆÇ Œ\ ‘S ‹à ”n —´
+						//ç©ºæ­©é¦™æ¡‚éŠ€ é‡‘è§’é£›ç‹ ã¨ æ åœ­ å…¨ é‡‘ é¦¬ é¾
 int ShuubandoByDefence[]={0,0,0,0,-1,-1,0,0,0,-1,-1,-1,-1,-1,-2,0};
-					//‹ó•àŒj‹â‹àŠp”ò‰¤‚ÆˆÇŒ\‘S‹à”n—´
+					//ç©ºæ­©é¦™æ¡‚éŠ€é‡‘è§’é£›ç‹ã¨æåœ­å…¨é‡‘é¦¬é¾
 int ShuubandoByHand[]={0,0,1,1,2,2,2,3,0,0,0,0,0,0,0,0};
 
 void KyokumenKomagumi::InitShuubando()
 {
-	// I”Õ“x‚ğ‹‚ß‚é‚Æ“¯‚ÉAI”Õ“x‚É‚æ‚éƒ{[ƒiƒX‚Ì•t‰ÁA‹î‚Ì‰Á“_‚às‚¤B
+	// çµ‚ç›¤åº¦ã‚’æ±‚ã‚ã‚‹ã¨åŒæ™‚ã«ã€çµ‚ç›¤åº¦ã«ã‚ˆã‚‹ãƒœãƒ¼ãƒŠã‚¹ã®ä»˜åŠ ã€é§’ã®åŠ ç‚¹ã‚‚è¡Œã†ã€‚
 	int suji,dan;
 	Shuubando[0]=0;
 	Shuubando[1]=0;
@@ -1845,9 +1845,9 @@ void KyokumenKomagumi::InitShuubando()
 }
 
 int IsKanagoma[]={
-//  ‹ó‹ó‹ó‹ó‹ó‹ó‹ó‹ó‹ó‹ó‹ó‹ó‹ó‹ó‹ó‹ó‹ó•àŒj‹â‹àŠp”ò‰¤‚ÆˆÇŒ\‘S‹à”n—´
+//  ç©ºç©ºç©ºç©ºç©ºç©ºç©ºç©ºç©ºç©ºç©ºç©ºç©ºç©ºç©ºç©ºç©ºæ­©é¦™æ¡‚éŠ€é‡‘è§’é£›ç‹ã¨æåœ­å…¨é‡‘é¦¬é¾
 	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,1,1,1,1,1,0,0,
-//	‹ó•àŒj‹â‹àŠp”ò‰¤‚ÆˆÇŒ\‘S‹à”n—´•Ç‹ó‹ó‹ó‹ó‹ó‹ó‹ó‹ó‹ó‹ó‹ó‹ó‹ó‹ó‹ó
+//	ç©ºæ­©é¦™æ¡‚éŠ€é‡‘è§’é£›ç‹ã¨æåœ­å…¨é‡‘é¦¬é¾å£ç©ºç©ºç©ºç©ºç©ºç©ºç©ºç©ºç©ºç©ºç©ºç©ºç©ºç©ºç©º
 	0,0,0,0,1,1,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 };
 
@@ -1883,8 +1883,8 @@ void KyokumenKomagumi::Move(int SorE,const Te &te)
 		enemy=0;
 	}
 	if (te.koma==SOU || te.koma==EOU) {
-		// ‹î‚ğ“®‚©‚µ‚½Œã‚ÅA‘S–Ê“I‚ÉBonus‚ÌŒvZ‚µ‚È‚¨‚µ‚ª•K—vB
-		// Semegoma,Mamorigoma‚È‚Ç‘S‚Ä•Ï‚í‚é‚Ì‚ÅB
+		// é§’ã‚’å‹•ã‹ã—ãŸå¾Œã§ã€å…¨é¢çš„ã«Bonusã®è¨ˆç®—ã—ãªãŠã—ãŒå¿…è¦ã€‚
+		// Semegoma,Mamorigomaãªã©å…¨ã¦å¤‰ã‚ã‚‹ã®ã§ã€‚
 	} else {
 		if (IsKanagoma[te.koma] && te.from>0) {
 			if (SorE==SELF) {
@@ -1930,7 +1930,7 @@ void KyokumenKomagumi::Move(int SorE,const Te &te)
 	}
 	KomagumiBonus[self]-=KomagumiValue[te.koma][te.from];
 	if (te.from>0 && (te.from&0x0f)<=4) {
-		// ‚S’i–ÚˆÈ‰ºEI”Õ“x‚ÌŒvZ
+		// ï¼”æ®µç›®ä»¥ä¸‹ãƒ»çµ‚ç›¤åº¦ã®è¨ˆç®—
 		if (SorE==SELF) {
 			Shuubando[1]-=ShuubandoByAtack[te.koma & ~SELF];
 		} else {
@@ -1938,7 +1938,7 @@ void KyokumenKomagumi::Move(int SorE,const Te &te)
 		}
 	}
 	if (te.from>0 && (te.from&0x0f)>=6) {
-		// ‚U’i–ÚˆÈãEI”Õ“x‚ÌŒvZ
+		// ï¼–æ®µç›®ä»¥ä¸Šãƒ»çµ‚ç›¤åº¦ã®è¨ˆç®—
 		if (SorE==SELF) {
 			Shuubando[0]-=ShuubandoByDefence[te.koma & ~SELF];
 		} else {
@@ -1946,7 +1946,7 @@ void KyokumenKomagumi::Move(int SorE,const Te &te)
 		}
 	}
 	if (te.from==0) {
-		// ‘Å‚Â‚±‚Æ‚É‚æ‚éI”Õ“x‚ÌŒ¸­
+		// æ‰“ã¤ã“ã¨ã«ã‚ˆã‚‹çµ‚ç›¤åº¦ã®æ¸›å°‘
 		if (SorE==SELF) {
 			Shuubando[1]-=ShuubandoByHand[te.koma&~SELF];
 		} else {
@@ -1955,7 +1955,7 @@ void KyokumenKomagumi::Move(int SorE,const Te &te)
 	}
 	if (te.capture) {
 		if ((te.to&0x0f)<=4) {
-			// ‚S’i–ÚˆÈ‰ºEI”Õ“x‚ÌŒvZ
+			// ï¼”æ®µç›®ä»¥ä¸‹ãƒ»çµ‚ç›¤åº¦ã®è¨ˆç®—
 			if (SorE==SELF) {
 				Shuubando[1]-=ShuubandoByDefence[te.capture & ~ENEMY];
 			} else {
@@ -1963,14 +1963,14 @@ void KyokumenKomagumi::Move(int SorE,const Te &te)
 			}
 		}
 		if ((te.to&0x0f)>=6) {
-			// ‚U’i–ÚˆÈãEI”Õ“x‚ÌŒvZ
+			// ï¼–æ®µç›®ä»¥ä¸Šãƒ»çµ‚ç›¤åº¦ã®è¨ˆç®—
 			if (SorE==SELF) {
 				Shuubando[0]-=ShuubandoByAtack[te.capture & ~ENEMY];
 			} else {
 				Shuubando[0]-=ShuubandoByDefence[te.capture & ~SELF];
 			}
 		}
-		// Hand‚É“ü‚Á‚½‚±‚Æ‚É‚æ‚éI”Õ“x‚ÌŒvZ
+		// Handã«å…¥ã£ãŸã“ã¨ã«ã‚ˆã‚‹çµ‚ç›¤åº¦ã®è¨ˆç®—
 		if (SorE==SELF) {
 			Shuubando[1]+=ShuubandoByHand[te.capture&~ENEMY&~PROMOTED];
 		} else {
@@ -1980,7 +1980,7 @@ void KyokumenKomagumi::Move(int SorE,const Te &te)
 	}
 	if (!te.promote) {
 		if ((te.to&0x0f)<=4) {
-			// ‚S’i–ÚˆÈ‰ºEI”Õ“x‚ÌŒvZ
+			// ï¼”æ®µç›®ä»¥ä¸‹ãƒ»çµ‚ç›¤åº¦ã®è¨ˆç®—
 			if (SorE==SELF) {
 				Shuubando[1]+=ShuubandoByAtack[te.koma & ~SELF];
 			} else {
@@ -1988,7 +1988,7 @@ void KyokumenKomagumi::Move(int SorE,const Te &te)
 			}
 		}
 		if ((te.to&0x0f)>=6) {
-			// ‚U’i–ÚˆÈãEI”Õ“x‚ÌŒvZ
+			// ï¼–æ®µç›®ä»¥ä¸Šãƒ»çµ‚ç›¤åº¦ã®è¨ˆç®—
 			if (SorE==SELF) {
 				Shuubando[0]+=ShuubandoByDefence[te.koma & ~SELF];
 			} else {
@@ -1998,7 +1998,7 @@ void KyokumenKomagumi::Move(int SorE,const Te &te)
 		KomagumiBonus[self]+=KomagumiValue[te.koma][te.to];
 	} else {
 		if ((te.to&0x0f)<=4) {
-			// ‚S’i–ÚˆÈ‰ºEI”Õ“x‚ÌŒvZ
+			// ï¼”æ®µç›®ä»¥ä¸‹ãƒ»çµ‚ç›¤åº¦ã®è¨ˆç®—
 			if (SorE==SELF) {
 				Shuubando[1]+=ShuubandoByAtack[(te.koma|PROMOTED) & ~SELF];
 			} else {
@@ -2006,7 +2006,7 @@ void KyokumenKomagumi::Move(int SorE,const Te &te)
 			}
 		}
 		if ((te.to&0x0f)>=6) {
-			// ‚U’i–ÚˆÈãEI”Õ“x‚ÌŒvZ
+			// ï¼–æ®µç›®ä»¥ä¸Šãƒ»çµ‚ç›¤åº¦ã®è¨ˆç®—
 			if (SorE==SELF) {
 				Shuubando[0]+=ShuubandoByDefence[(te.koma|PROMOTED) & ~SELF];
 			} else {
@@ -2017,14 +2017,14 @@ void KyokumenKomagumi::Move(int SorE,const Te &te)
 	}
 	Kyokumen::Move(SorE,te);
 	if (te.koma==SOU || te.koma==EOU) {
-		// ‘S–Ê“I‚É‹à‹î‚ÌBonus‚ÌŒvZ‚µ‚È‚¨‚µB
+		// å…¨é¢çš„ã«é‡‘é§’ã®Bonusã®è¨ˆç®—ã—ãªãŠã—ã€‚
 		InitBonus();
 	}
 }
 
 int KyokumenKomagumi::Evaluate()
 {
-	// I”Õ“x‚ğ‚O`‚P‚U‚Ì”ÍˆÍ‚É•â³‚·‚éB
+	// çµ‚ç›¤åº¦ã‚’ï¼ã€œï¼‘ï¼–ã®ç¯„å›²ã«è£œæ­£ã™ã‚‹ã€‚
 	int Shuubando0,Shuubando1;
 
 	if (Shuubando[0]<0) {
@@ -2042,7 +2042,7 @@ int KyokumenKomagumi::Evaluate()
 		Shuubando1=Shuubando[1];
 	}
 
-	// I”Õ“x‚Ì·‚ğ•]‰¿‚·‚éB‚Æ‚è‚ ‚¦‚¸A‚Pˆá‚¤‚Æ‚Q‚O‚O“_ˆá‚¤‚±‚Æ‚É‚·‚éB
+	// çµ‚ç›¤åº¦ã®å·®ã‚’è©•ä¾¡ã™ã‚‹ã€‚ã¨ã‚Šã‚ãˆãšã€ï¼‘é•ã†ã¨ï¼’ï¼ï¼ç‚¹é•ã†ã“ã¨ã«ã™ã‚‹ã€‚
 	int ret=(Shuubando1-Shuubando0)*200;
 
 	ret+=SemegomaBonus[0]*Shuubando1/16;
@@ -2058,24 +2058,24 @@ int KyokumenKomagumi::Evaluate()
 		printf("ret=%d\n",ret);
 	}
 
-	// ÅŒã‚ÉA‹î“¾‚Ì“_”‚Æ‡‚í‚¹‚Ä•]‰¿’l‚Æ‚·‚éB
+	// æœ€å¾Œã«ã€é§’å¾—ã®ç‚¹æ•°ã¨åˆã‚ã›ã¦è©•ä¾¡å€¤ã¨ã™ã‚‹ã€‚
 	return ret+value;
 //	return value;
 }
 
-// è”Ô‚©‚çŒ©‚Ä“G‚Ì‹î
+// æ‰‹ç•ªã‹ã‚‰è¦‹ã¦æ•µã®é§’
 int IsEnemy(int SorE,KomaInf koma)
 {
 	return koma!=WALL && !(SorE&koma);
 }
 
-// è”Ô‚©‚çŒ©‚Ä–¡•û‚Ì‹î
+// æ‰‹ç•ªã‹ã‚‰è¦‹ã¦å‘³æ–¹ã®é§’
 int IsSelf(int SorE,KomaInf koma)
 {
 	return koma!=WALL && (SorE&koma);
 }
 
-// è‚Ì‰¿’l‚Ì”äŠriqsort—pj‘å‚«‚¢‡‚É•À‚Ô‚æ‚¤‚É‚·‚éB
+// æ‰‹ã®ä¾¡å€¤ã®æ¯”è¼ƒï¼ˆqsortç”¨ï¼‰å¤§ãã„é †ã«ä¸¦ã¶ã‚ˆã†ã«ã™ã‚‹ã€‚
 int teValueComp(const void *p1,const void *p2)
 {
 	Te *te1=(Te *)p1;
@@ -2102,7 +2102,7 @@ static const int Tbl[256]={
 	4,5,5,6,5,6,6,7,5,6,6,7,6,7,7,8
 };
 
-// x‚ÍA‰½ƒrƒbƒg‚P‚ª—§‚Á‚Ä‚¢‚é‚©
+// xã¯ã€ä½•ãƒ“ãƒƒãƒˆï¼‘ãŒç«‹ã£ã¦ã„ã‚‹ã‹
 int bitnum(int x)
 {
 	return Tbl[((unsigned char*)&x)[0]]+Tbl[((unsigned char*)&x)[1]]+Tbl[((unsigned char*)&x)[2]]+Tbl[((unsigned char*)&x)[3]];
@@ -2118,43 +2118,43 @@ void KyokumenKomagumi::EvaluateTe(int SorE,int teNum,Te *te)
 		int LossS,LossE,GainS,GainE;
 		LossS=LossE=GainS=GainE=0;
 		KyokumenKomagumi _new(*this);
-		// è”Ô‚©‚çŒ©‚Ä“G‚Ì‹Ê
+		// æ‰‹ç•ªã‹ã‚‰è¦‹ã¦æ•µã®ç‰
 		KomaInf EnemyKing=SorE==SELF? EOU:SOU;
-		// è”Ô‚©‚çŒ©‚Ä“G‚Ì—˜‚«
+		// æ‰‹ç•ªã‹ã‚‰è¦‹ã¦æ•µã®åˆ©ã
 		unsigned int *_newControlE=SorE==SELF?_new.controlE:_new.controlS;
-		// è”Ô‚©‚çŒ©‚Ä–¡•û‚Ì—˜‚«
+		// æ‰‹ç•ªã‹ã‚‰è¦‹ã¦å‘³æ–¹ã®åˆ©ã
 		unsigned int *_newControlS=SorE==SELF?_new.controlS:_new.controlE;
-		// è”Ô‚©‚çŒ©‚Ä–¡•û‚Ì—˜‚«
+		// æ‰‹ç•ªã‹ã‚‰è¦‹ã¦å‘³æ–¹ã®åˆ©ã
 		unsigned int *_nowControlS=SorE==SELF?controlS:controlE;
 
 		KomaInf NewKoma=te[i].promote? te[i].koma|PROMOTED:te[i].koma;
-		// ÀÛ‚Éˆêè“®‚©‚µ‚ÄA•]‰¿’l‚Ì•Ï“®‚ğ‚İ‚éB
+		// å®Ÿéš›ã«ä¸€æ‰‹å‹•ã‹ã—ã¦ã€è©•ä¾¡å€¤ã®å¤‰å‹•ã‚’ã¿ã‚‹ã€‚
 		_new.Move(SorE,te[i]);
 		te[i].value=_new.Evaluate()-nowEval;
 		if (SorE==ENEMY) {
-			// “G‚Ì”Ô‚Ì‚É‚Íè‚Ì‰¿’l‚ğ‚Ğ‚Á‚­‚è•Ô‚µ‚Ä’u‚­
+			// æ•µã®ç•ªã®æ™‚ã«ã¯æ‰‹ã®ä¾¡å€¤ã‚’ã²ã£ãã‚Šè¿”ã—ã¦ç½®ã
 			te[i].value=-te[i].value;
 		}
 		if (te[i].from!=0) {
-			// ‹î‚ª‹‚½êŠ‚Ì‹ºˆĞ‚ª‚È‚­‚È‚é
+			// é§’ãŒå±…ãŸå ´æ‰€ã®è„…å¨ãŒãªããªã‚‹
 			LossS-=Eval(te[i].from);
 		}
-		// V‚µ‚­ˆÚ“®‚µ‚½æ‚Å‚Ì‹ºˆĞ‚ª‰Á‚í‚é
+		// æ–°ã—ãç§»å‹•ã—ãŸå…ˆã§ã®è„…å¨ãŒåŠ ã‚ã‚‹
 		LossS+=_new.Eval(te[i].to);
-		// ‘Šè‚É—^‚¦‚é‹ºˆĞ‚ÆAV‚µ‚­©•ª‚Ì‹î‚Éƒqƒ‚‚ğ‚Â‚¯‚é‚±‚Æ‚ÅAŒ¸‚é‹ºˆĞ‚ğŒvZ
+		// ç›¸æ‰‹ã«ä¸ãˆã‚‹è„…å¨ã¨ã€æ–°ã—ãè‡ªåˆ†ã®é§’ã«ãƒ’ãƒ¢ã‚’ã¤ã‘ã‚‹ã“ã¨ã§ã€æ¸›ã‚‹è„…å¨ã‚’è¨ˆç®—
 		int dir;
 		for(dir=0;dir<12;dir++) {
 			if (CanMove[dir][NewKoma]) {
 				int p=te[i].to+Direct[dir];
 				if (_new.ban[p]!=EnemyKing) {
-					// ‹ÊˆÈŠO‚Ì‹î‚É‘Î‚·‚é‹ºˆĞ
+					// ç‰ä»¥å¤–ã®é§’ã«å¯¾ã™ã‚‹è„…å¨
 					if (IsEnemy(SorE,_new.ban[p])) {
 						LossE+=_new.Eval(p);
 					} else if (IsSelf(SorE,_new.ban[p])) {
 						GainS+=Eval(p)-_new.Eval(p);
 					}
 				} else {
-					// ‹Ê‚É—^‚¦‚é‹ºˆĞ‚Í‚»‚Ì‚Ü‚ÜŒvZ‚·‚é‚Æ‘å‚«‚·‚¬‚É‚È‚é‚Ì‚Å’²®‚·‚éB
+					// ç‰ã«ä¸ãˆã‚‹è„…å¨ã¯ãã®ã¾ã¾è¨ˆç®—ã™ã‚‹ã¨å¤§ãã™ãã«ãªã‚‹ã®ã§èª¿æ•´ã™ã‚‹ã€‚
 					if (_newControlE[te[i].to]) {
 						if (_newControlS[te[i].to]) {
 							LossE+=1000;
@@ -2167,13 +2167,13 @@ void KyokumenKomagumi::EvaluateTe(int SorE,int teNum,Te *te)
 				}
 			}
 		}
-		// ˆÚ“®‚µ‚½‚±‚Æ‚ÅA•Ê‚Ì‹î‚Ì”ò‚Ñ—˜‚«‚ğ’Ê‚·i‚©‚à’m‚ê‚È‚¢j
+		// ç§»å‹•ã—ãŸã“ã¨ã§ã€åˆ¥ã®é§’ã®é£›ã³åˆ©ãã‚’é€šã™ï¼ˆã‹ã‚‚çŸ¥ã‚Œãªã„ï¼‰
 		if (te[i].from>OU) {
 			for(dir=0;dir<8;dir++) {
 				if ((_nowControlS[te[i].from]& (1<<(dir+16))) !=0) {
 					int p=_new.search(te[i].from,Direct[dir]);
 					if (_new.ban[p]!=WALL) {
-						// ”ò‚Ñ—˜‚«‚Ì’Ê‚Á‚½æ‚Å‚ÌŒğŠ·’l‚ÌÄŒvZ
+						// é£›ã³åˆ©ãã®é€šã£ãŸå…ˆã§ã®äº¤æ›å€¤ã®å†è¨ˆç®—
 						if (IsEnemy(SorE,_new.ban[p])) {
 							LossE+=_new.Eval(p);
 						} else if (IsSelf(SorE,_new.ban[p])) {
@@ -2183,11 +2183,11 @@ void KyokumenKomagumi::EvaluateTe(int SorE,int teNum,Te *te)
 				}
 			}
 		}
-		// ˆÚ“®‚µ‚½‹î©g‚Ì”ò‚Ñ—˜‚«‚É‚æ‚é‹ºˆĞ‚Ì‘Œ¸‚ğŒvZ‚·‚é
+		// ç§»å‹•ã—ãŸé§’è‡ªèº«ã®é£›ã³åˆ©ãã«ã‚ˆã‚‹è„…å¨ã®å¢—æ¸›ã‚’è¨ˆç®—ã™ã‚‹
 		for(dir=0;dir<8;dir++) {
 			if (CanJump[dir][NewKoma]) {
 				int p=_new.search(te[i].to,Direct[dir]);
-				// —á‚É‚æ‚Á‚ÄA‹Ê‚É‘Î‚·‚é‹ºˆĞ‚Í‘å‚«‚­•]‰¿‚³‚ê‚·‚¬‚é‚Ì‚Å’²®‚·‚éB
+				// ä¾‹ã«ã‚ˆã£ã¦ã€ç‰ã«å¯¾ã™ã‚‹è„…å¨ã¯å¤§ããè©•ä¾¡ã•ã‚Œã™ãã‚‹ã®ã§èª¿æ•´ã™ã‚‹ã€‚
 				if (_new.ban[p]!=EnemyKing) {
 					if (IsEnemy(SorE,_new.ban[p])) {
 						LossE+=_new.Eval(p);
@@ -2209,14 +2209,14 @@ void KyokumenKomagumi::EvaluateTe(int SorE,int teNum,Te *te)
 		}
 		te[i].value+=GainS-LossS;
 		if ((te[i].capture!=EMPTY && te[i].capture!=FU)) {
-			// •àˆÈŠO‚Ì‹î‚ğæ‚éè‚Í–³ğŒ‚É1500“_ƒvƒ‰ƒX‚µ‚ÄA“Ç‚İ‚É“ü‚ê‚é‚æ‚¤‚É‚·‚é
+			// æ­©ä»¥å¤–ã®é§’ã‚’å–ã‚‹æ‰‹ã¯ç„¡æ¡ä»¶ã«1500ç‚¹ãƒ—ãƒ©ã‚¹ã—ã¦ã€èª­ã¿ã«å…¥ã‚Œã‚‹ã‚ˆã†ã«ã™ã‚‹
 			te[i].value+=1500;
 		}
 		if (te[i].from==FU && bitnum(_newControlE[0xac-te[i].to])>1) {
-			// Å“_‚Ì•àc‚©‚àB
+			// ç„¦ç‚¹ã®æ­©â€¦ã‹ã‚‚ã€‚
 			te[i].value+=50;
 		}
-		// UŒ‚‚Ì‰¿’l‚Í‚±‚ê‚­‚ç‚¢‚Ì’li‚P‚O•ª‚Ì‚Pj‚ğ‰Á‚¦‚é‚ÆAÀŒ±‚Å‚Í‚¿‚å‚¤‚Ç—Ç‚¢
+		// æ”»æ’ƒã®ä¾¡å€¤ã¯ã“ã‚Œãã‚‰ã„ã®å€¤ï¼ˆï¼‘ï¼åˆ†ã®ï¼‘ï¼‰ã‚’åŠ ãˆã‚‹ã¨ã€å®Ÿé¨“ã§ã¯ã¡ã‚‡ã†ã©è‰¯ã„
 		te[i].value+=LossE*1/10;
 
 //		te[i].Print();
@@ -2224,15 +2224,15 @@ void KyokumenKomagumi::EvaluateTe(int SorE,int teNum,Te *te)
 	}
 //	char p[20];
 //	gets(p);
-	// •À‚Ñ‘Ö‚¦B
+	// ä¸¦ã³æ›¿ãˆã€‚
 	qsort(te,teNum,sizeof(te[0]),teValueComp);
 }
 
 int Kyokumen::MakeChecks(int SorE,Te *teBuf,int *pin)
 {
-	Kyokumen kk(*this);			// ÀÛ‚É“®‚©‚µ‚Ä‚İ‚é‹Ç–Ê
-	unsigned int *selfControl;	// è”Ô‘¤‚©‚çŒ©‚ÄA©•ª‚Ì—˜‚«
-	int enemyKing;				// è”Ô‘¤‚©‚çŒ©‚ÄA‘Šè‚Ì‹Ê‚ÌˆÊ’u
+	Kyokumen kk(*this);			// å®Ÿéš›ã«å‹•ã‹ã—ã¦ã¿ã‚‹å±€é¢
+	unsigned int *selfControl;	// æ‰‹ç•ªå´ã‹ã‚‰è¦‹ã¦ã€è‡ªåˆ†ã®åˆ©ã
+	int enemyKing;				// æ‰‹ç•ªå´ã‹ã‚‰è¦‹ã¦ã€ç›¸æ‰‹ã®ç‰ã®ä½ç½®
 
 	if (SorE==SELF) {
 		selfControl=kk.controlS;
@@ -2242,12 +2242,12 @@ int Kyokumen::MakeChecks(int SorE,Te *teBuf,int *pin)
 		enemyKing=kingS;
 	}
 	int teNum=MakeLegalMoves(SorE,teBuf,pin);
-	// ÀÛ‚É“®‚©‚µ‚Ä‚İ‚ÄA‰¤è‚¾‚¯‚ğc‚·B
+	// å®Ÿéš›ã«å‹•ã‹ã—ã¦ã¿ã¦ã€ç‹æ‰‹ã ã‘ã‚’æ®‹ã™ã€‚
 	int outeNum=0;
 	for(int i=0;i<teNum;i++) {
 		kk=*this;
 		kk.Move(SorE,teBuf[i]);
-		// ‘Šè‚Ì‹Ê‚É—˜‚«‚ª•t‚¢‚Ä‚¢‚ê‚Î‰¤èB
+		// ç›¸æ‰‹ã®ç‰ã«åˆ©ããŒä»˜ã„ã¦ã„ã‚Œã°ç‹æ‰‹ã€‚
 		if (selfControl[enemyKing]) {
 			teBuf[outeNum++]=teBuf[i];
 		}
@@ -2353,13 +2353,13 @@ void TsumeHash::Add(uint64 KyokumenHashVal,uint64 HandHashVal,int Motigoma[],int
 			break;
 		} else if (HashTbl[NowHashVal&TSUME_HASH_AND].HashVal==KyokumenHashVal) {
 			if (HashTbl[NowHashVal&TSUME_HASH_AND].Motigoma==Hand) {
-				// ‚¿‹î‚àŠÜ‚ß‚Ä“¯ˆê‹Ç–Ê
+				// æŒã¡é§’ã‚‚å«ã‚ã¦åŒä¸€å±€é¢
 			} else {
-				// ”Õã‚ª“¯ˆê‚ÅA‚¿‹î‚ªˆá‚¤‚à‚Ì‚ª“o˜^Ï‚İ
+				// ç›¤ä¸ŠãŒåŒä¸€ã§ã€æŒã¡é§’ãŒé•ã†ã‚‚ã®ãŒç™»éŒ²æ¸ˆã¿
 				while(HashTbl[NowHashVal&TSUME_HASH_AND].NextEntry!=0) {
 					NowHashVal=HashTbl[NowHashVal&TSUME_HASH_AND].NextEntry;
 					if (HashTbl[NowHashVal&TSUME_HASH_AND].Motigoma==Hand) {
-						// ‚¿‹î‚àŠÜ‚ß‚Ä“¯ˆê‹Ç–Ê
+						// æŒã¡é§’ã‚‚å«ã‚ã¦åŒä¸€å±€é¢
 						break;
 					}
 				}
@@ -2430,7 +2430,7 @@ TsumeVal *TsumeHash::Find(uint64 KyokumenHashVal,uint64 HandHashVal,int Motigoma
 	return NULL;
 }
 
-// ƒnƒbƒVƒ…‚É“o˜^‚³‚ê‚½‹Ç–Ê‚ÅA‚¿‹î‚ª‚æ‚è­‚È‚¢‹Ç–Ê‚Å‹l‚ñ‚Å‚¢‚é‹Ç–Ê‚ğ’T‚·
+// ãƒãƒƒã‚·ãƒ¥ã«ç™»éŒ²ã•ã‚ŒãŸå±€é¢ã§ã€æŒã¡é§’ãŒã‚ˆã‚Šå°‘ãªã„å±€é¢ã§è©°ã‚“ã§ã„ã‚‹å±€é¢ã‚’æ¢ã™
 TsumeVal *TsumeHash::DomSearchCheckMate(uint64 KyokumenHashVal,int Motigoma[])
 {
 	uint64 CalcMotigoma=CalcHand(Motigoma);
@@ -2441,7 +2441,7 @@ TsumeVal *TsumeHash::DomSearchCheckMate(uint64 KyokumenHashVal,int Motigoma[])
 				return NULL;
 			}
 		}
-		// ƒnƒbƒVƒ…‚É“o˜^‚³‚ê‚Ä‚¢‚é‚æ‚è‚¿‹î‚ª‘½‚­AƒnƒbƒVƒ…‚Å‹l‚İ‚È‚ç‹l‚İ
+		// ãƒãƒƒã‚·ãƒ¥ã«ç™»éŒ²ã•ã‚Œã¦ã„ã‚‹ã‚ˆã‚ŠæŒã¡é§’ãŒå¤šãã€ãƒãƒƒã‚·ãƒ¥ã§è©°ã¿ãªã‚‰è©°ã¿
 		if ((ret->Motigoma & CalcMotigoma)==ret->Motigoma && ret->mate==1) {
 			return ret;
 		}
@@ -2453,7 +2453,7 @@ TsumeVal *TsumeHash::DomSearchCheckMate(uint64 KyokumenHashVal,int Motigoma[])
 
 int Kyokumen::Mate(int SorE,int maxDepth,Te &te)
 {
-	Te teBuf[10000];	// [‚³30’ö“x‚Ü‚Å‚È‚ç\•ª‚·‚¬‚é‘å‚«‚³
+	Te teBuf[10000];	// æ·±ã•30ç¨‹åº¦ã¾ã§ãªã‚‰ååˆ†ã™ãã‚‹å¤§ãã•
 
 	TsumeVal *p;
 	if ((p=TsumeHash::Find(KyokumenHashVal,HandHashVal,Hand+SorE))!=NULL) {
@@ -2468,9 +2468,9 @@ int Kyokumen::Mate(int SorE,int maxDepth,Te &te)
 			break;
 		}
 	}
-	//  0:•s–¾
-	//  1:‹l‚ñ‚¾
-	// -1:•s‹l‚İ
+	//  0:ä¸æ˜
+	//  1:è©°ã‚“ã 
+	// -1:ä¸è©°ã¿
 	return ret;
 }
 
@@ -2479,12 +2479,12 @@ int Kyokumen::CheckMate(int SorE,int depth, int depthMax, Te *checks,Te &te)
 	int teNum = MakeChecks(SorE,checks);
 	if (teNum == 0) {
 		TsumeHash::Add(KyokumenHashVal,HandHashVal,Hand+SorE,-1,0);
-		return -1;	//‹l‚Ü‚È‚¢
+		return -1;	//è©°ã¾ãªã„
 	}
 	TsumeVal *p;
 	if ((p=TsumeHash::DomSearchCheckMate(KyokumenHashVal,Hand+SorE))!=NULL) {
 		te=p->te;
-		return 1; //‹l‚ñ‚¾
+		return 1; //è©°ã‚“ã 
 	}
 	int valmax = -1;
 	for (int i = 0; i < teNum; i++) {
@@ -2494,12 +2494,12 @@ int Kyokumen::CheckMate(int SorE,int depth, int depthMax, Te *checks,Te &te)
 		if (val > valmax) valmax = val;
 		if (valmax == 1) {
 			te=checks[i];
-			break; //‹l‚ñ‚¾
+			break; //è©°ã‚“ã 
 		}
 	}
-	if (valmax == 1) { //‹l‚ñ‚¾
+	if (valmax == 1) { //è©°ã‚“ã 
 		TsumeHash::Add(KyokumenHashVal,HandHashVal,Hand+SorE,1,te);
-	} else if (valmax == -1) { //–{“–‚É‹l‚Ü‚È‚©‚Á‚½
+	} else if (valmax == -1) { //æœ¬å½“ã«è©°ã¾ãªã‹ã£ãŸ
 		TsumeHash::Add(KyokumenHashVal,HandHashVal,Hand+SorE,-1,0);
 	}
 	return valmax;
@@ -2515,15 +2515,15 @@ int Kyokumen::AntiCheckMate(int SorE,int depth, int depthMax, Te *antichecks)
 	if (teNum == 0) {
 		return 1;
 	}
-	if (depth >= depthMax+1) return 0; //’·‚³‚ÌŒÀŠE‹l‚İ‚Í•s–¾
+	if (depth >= depthMax+1) return 0; //é•·ã•ã®é™ç•Œè©°ã¿ã¯ä¸æ˜
 
 	for (i = 0; i < teNum; i++) {
 		Kyokumen k(*this);
 		k.Move(SorE,antichecks[i]);
 		int val = k.CheckMate(SorE^0x30, depth+1, depthMax, antichecks+teNum,te);
 		if (val < valmin) valmin = val;
-		if (valmin == -1) break; // ‹l‚Ü‚È‚©‚Á‚½
-		if (valmin == 0) break; // ‹l‚Ü‚È‚©‚Á‚½
+		if (valmin == -1) break; // è©°ã¾ãªã‹ã£ãŸ
+		if (valmin == 0) break; // è©°ã¾ãªã‹ã£ãŸ
 	}
 	return valmin;
 }
