@@ -3,7 +3,7 @@
 void Te::FPrint(FILE *fp)
 {
 	fprintf(fp,"%02x",to);
-	fprintf(fp,"%02s",komaStr2[koma]);
+	fprintf(fp,"%s",komaStr2[koma]);
 	if (promote) {
 		fprintf(fp,"成");
 	}
