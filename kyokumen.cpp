@@ -1,7 +1,11 @@
 #include "kyokumen.h"
 
+#include <algorithm>
 #include <memory.h>
 #include <stdlib.h>
+
+using std::max;
+using std::min;
 
 uint64_t Kyokumen::HashSeed[ERY+1][0x99+1];
 uint64_t Kyokumen::HandHashSeed[EHI+1][18+1];
