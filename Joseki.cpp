@@ -8,7 +8,7 @@ Joseki::Joseki(const char *filenames)
 	// filenamesは、,区切りとする。
 	// JosekiDataは１エントリー５１２バイトとする。
 	// JosekiSizeはファイルの長さ/512となる。
-	char *filename=filenames;
+	const char *filename=filenames;
 	char *nextfile=strchr(filenames,',');
 	if (nextfile!=NULL) {
 		*nextfile='\0';	// ,を\0で置き換え
