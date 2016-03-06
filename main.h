@@ -1,10 +1,8 @@
 #ifndef _MAIN_H_
 #define _MAIN_H_
 
-#include <algorithm>
-#include <stdio.h>
-
 #include "kyokumen.h"
+#include <cstdint>
 
 #define MAX_DEPTH 32
 #define VAL_INFINITE  999999

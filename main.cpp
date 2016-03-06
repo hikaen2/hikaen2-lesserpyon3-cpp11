@@ -1,8 +1,8 @@
 #include "main.h"
 #include <algorithm>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
+#include <cstdlib>
+#include <cstring>
+#include <ctime>
 
 #ifdef _WINDOWS
 #include <winsock.h>

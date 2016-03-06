@@ -1,8 +1,8 @@
 #ifndef _KYOKUMEN_H_
 #define _KYOKUMEN_H_
 
-
-#include <stdio.h>
+#include <cstdint>
+#include <cstdio>
 
 typedef unsigned char KomaInf;
 

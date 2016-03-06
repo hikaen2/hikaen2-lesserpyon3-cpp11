@@ -1,8 +1,9 @@
 #include "kyokumen.h"
 
 #include <algorithm>
-#include <memory.h>
-#include <stdlib.h>
+#include <cinttypes>
+#include <cstdlib>
+#include <cstring>
 
 using std::max;
 using std::min;
@@ -823,7 +824,7 @@ void Kyokumen::FPrint(FILE *fp)
 {
 	int x,y;
 	y = 0;
-	fprintf(fp,"Hash:%016llx Hand:%016llx Kyokumen:%016llx\n",HashVal,HandHashVal,KyokumenHashVal);
+	fprintf(fp,"Hash:%016" PRIx64 " Hand:%016" PRIx64 " Kyokumen:%016" PRIx64 "\n",HashVal,HandHashVal,KyokumenHashVal);
 
 	fprintf(fp,"持ち駒：");
 	for (x = EHI; x >=EFU; x--) {
