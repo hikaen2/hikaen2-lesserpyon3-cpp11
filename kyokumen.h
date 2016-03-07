@@ -68,16 +68,16 @@ enum {
 	EOU=ENEMY+8,		//敵の玉
 };
 
-extern const int Direct[12];
-extern const int CanPromote[];
-extern const int CanMove[12][64];
-extern const int CanJump[12][64];
+extern int Direct[12];
+extern int CanPromote[];
+extern int CanMove[12][64];
+extern int CanJump[12][64];
 extern const char *komaStr[];
 extern const char *komaStr2[];
 
 // ３章で追加。駒の価値と持ち駒の価値
-extern const int KomaValue[];
-extern const int HandValue[];
+extern int KomaValue[];
+extern int HandValue[];
 
 // 利きは、８方向の利き＋桂馬の４方向の利き＋飛び駒の８方向の利きを扱います。
 // 各利きに１ビットを割り当てて、合計２０ビットが必要です。
