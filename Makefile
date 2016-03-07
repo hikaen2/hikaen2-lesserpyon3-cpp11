@@ -25,3 +25,7 @@ Joseki.o: Joseki.cpp
 .PHONY: clean
 clean:
 	rm -f $(objects)
+
+.PHONY: diff
+diff:
+	git diff --no-prefix 71c2c Joseki.cpp KomaMoves.cpp kyokumen.cpp kyokumen.h main.cpp main.h Te.cpp
