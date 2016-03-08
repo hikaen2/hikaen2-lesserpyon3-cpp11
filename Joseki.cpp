@@ -5,7 +5,7 @@
 
 Joseki::Joseki(const char *filenames_)
 {
-	char* filenames = (char*)malloc(strlen(filenames_));
+	char* filenames = (char*)malloc(strlen(filenames_) + 1);
 	strcpy(filenames, filenames_);
 
 	// filenamesは、,区切りとする。
